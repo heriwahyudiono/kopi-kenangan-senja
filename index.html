@@ -1,10 +1,10 @@
-<?php
+<!-- <?php
 require_once 'controllers/MenuController.php';
 
 $menuController = new MenuController();
 
 $menus = $menuController->getMenus();
-?>
+?> -->
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
@@ -22,7 +22,7 @@ $menus = $menuController->getMenus();
   <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-800 bg-opacity-80 py-4 px-6 flex justify-between items-center border-b border-gray-700">
     <a href="#" class="text-2xl font-bold italic text-white">kenangan<span class="text-yellow-500">senja</span></a>
     <div class="hidden md:flex space-x-6">
-      <a href="#" class="hover:text-yellow-500">Home</a>
+      <a href="#home" class="hover:text-yellow-500">Home</a>
       <a href="#about" class="hover:text-yellow-500">Tentang Kami</a>
       <a href="#menu" class="hover:text-yellow-500">Menu</a>
       <a href="#products" class="hover:text-yellow-500">Produk</a>
@@ -32,7 +32,7 @@ $menus = $menuController->getMenus();
       <a href="#" id="search-menu" class="hover:text-yellow-500"><i data-feather="search"></i></a>
       <a href="#" id="shopping-cart-button" class="hover:text-yellow-500"><i data-feather="shopping-cart"></i></a>
       <a href="#" id="menu-button" class="md:hidden hover:text-yellow-500"><i data-feather="menu"></i></a>
-      <a href="#" class="hidden hover:text-yellow-500" id="close-button"><i data-feather="x"></i></a>
+      <a href="#" class="hidden md:hidden hover:text-yellow-500" id="close-button"><i data-feather="x"></i></a>
     </div>
     <div class="absolute top-full right-7 bg-white px-4 py-2 w-80 text-gray-900 flex items-center hidden" id="search-form">
       <input type="search" id="search-box" placeholder="Search here..." class="w-full p-2 focus:outline-none" id="search-button">
@@ -40,13 +40,13 @@ $menus = $menuController->getMenus();
     </div>
   </nav>
 
-  <aside class="fixed top-0 h-full w-64 bg-white text-black shadow-lg z-50 sidebar" id="sidenav">
+  <aside class="fixed top-0 h-full w-64 bg-white text-black shadow-lg z-50 md:hidden sidebar" id="sidenav">
     <nav class="flex flex-col h-full space-y-4 p-8">
-      <a href="#" class="hover:text-yellow-500">Home</a>
-      <a href="#tentang-kami" class="hover:text-yellow-500">Tentang Kami</a>
+      <a href="#home" class="hover:text-yellow-500">Home</a>
+      <a href="#about" class="hover:text-yellow-500">Tentang Kami</a>
       <a href="#menu" class="hover:text-yellow-500">Menu</a>
-      <a href="#produk" class="hover:text-yellow-500">Produk</a>
-      <a href="#kontak" class="hover:text-yellow-500">Kontak</a>
+      <a href="#products" class="hover:text-yellow-500">Produk</a>
+      <a href="#contact" class="hover:text-yellow-500">Kontak</a>
     </nav>
   </aside>
   
@@ -66,7 +66,7 @@ $menus = $menuController->getMenus();
         <img src="assets/img/tentang-kami.jpg" alt="Tentang Kami" class="rounded-lg shadow-lg">
       </div>
       <div class="md:w-1/2 space-y-4">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur ducimus voluptatum dolor. Et, voluptatum accusantium!</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat ratione repudiandae non obcaecati sapiente sint deleniti assumenda.</p>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic deserunt iure amet facilis eos a quo cum voluptates molestias nihil.</p>
       </div>
     </div>
@@ -77,7 +77,7 @@ $menus = $menuController->getMenus();
       <h2 class="text-3xl font-bold"><span class="text-yellow-500">Menu</span> Kami</h2>
       <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita, repellendus numquam quam tempora voluptatum.</p>
     </div>
-    <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center flex flex-col items-center">
         <img src="storage/images/menu.jpg" alt="Espresso" class="mb-4 rounded-lg">
         <h3 class="text-xl font-semibold">- Espresso -</h3>
@@ -93,8 +93,8 @@ $menus = $menuController->getMenus();
         <h3 class="text-xl font-semibold">- Latte -</h3>
         <p class="text-yellow-500">IDR 20K</p>
       </div>
-    </div> -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    </div>
+    <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <?php foreach ($menus as $menu): ?>
         <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center flex flex-col items-center">
           <img src="storage/images/<?= $menu['menu_image']; ?>" alt="<?= $menu['menu_name']; ?>" class="rounded-lg mb-4 w-full h-48 object-cover">
@@ -103,7 +103,7 @@ $menus = $menuController->getMenus();
           <p class="text-gray-400 mt-2"><?= $menu['description']; ?></p>
         </div>
       <?php endforeach; ?>
-    </div>
+    </div> -->
   </section>
  
   <section id="products" class="py-20 px-6 bg-gray-800">
@@ -142,15 +142,15 @@ $menus = $menuController->getMenus();
         <form class="bg-gray-800 p-6 rounded-lg shadow-lg">
           <div class="mb-4">
             <label for="name" class="block text-sm font-semibold mb-1">Nama</label>
-            <input type="text" id="name" placeholder="Nama" class="w-full p-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+            <input type="text" id="name" placeholder="Nama" class="w-full p-2 text-gray-900 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
           </div>
           <div class="mb-4">
             <label for="email" class="block text-sm font-semibold mb-1">Email</label>
-            <input type="email" id="email" placeholder="Email" class="w-full p-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+            <input type="email" id="email" placeholder="Email" class="w-full p-2 text-gray-900 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
           </div>
           <div class="mb-4">
             <label for="message" class="block text-sm font-semibold mb-1">Pesan</label>
-            <textarea id="message" rows="4" placeholder="Tulis pesan..." class="w-full p-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"></textarea>
+            <textarea id="message" rows="4" placeholder="Tulis pesan..." class="w-full p-2 text-gray-900 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"></textarea>
           </div>
           <button type="submit" class="w-full bg-yellow-500 text-gray-900 font-semibold py-2 rounded-lg hover:bg-yellow-400 transition duration-300">Kirim Pesan</button>
         </form>

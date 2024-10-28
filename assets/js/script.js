@@ -22,3 +22,4 @@ closeMenu.addEventListener('click', () => {
     toggleButton.classList.toggle('hidden');
     closeMenu.classList.toggle('hidden');
 });
+
