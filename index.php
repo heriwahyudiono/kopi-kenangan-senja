@@ -1,11 +1,3 @@
-<!-- <?php
-require_once 'controllers/MenuController.php';
-
-$menuController = new MenuController();
-
-$menus = $menuController->getMenus();
-?> -->
-
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -94,16 +86,6 @@ $menus = $menuController->getMenus();
         <p class="text-yellow-500">IDR 20K</p>
       </div>
     </div>
-    <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <?php foreach ($menus as $menu): ?>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center flex flex-col items-center">
-          <img src="storage/images/<?= $menu['menu_image']; ?>" alt="<?= $menu['menu_name']; ?>" class="rounded-lg mb-4 w-full h-48 object-cover">
-          <h3 class="text-xl font-semibold text-white"><?= $menu['menu_name']; ?></h3>
-          <p class="text-yellow-500 mt-2">IDR <?= $menu['price']; ?></p>
-          <p class="text-gray-400 mt-2"><?= $menu['description']; ?></p>
-        </div>
-      <?php endforeach; ?>
-    </div> -->
   </section>
  
   <section id="products" class="py-20 px-6 bg-gray-800">
