@@ -69,7 +69,7 @@
       <h2 class="text-3xl font-bold"><span class="text-yellow-500">Menu</span> Kami</h2>
       <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita, repellendus numquam quam tempora voluptatum.</p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center flex flex-col items-center">
         <img src="storage/images/menu.jpg" alt="Espresso" class="mb-4 rounded-lg">
         <h3 class="text-xl font-semibold">- Espresso -</h3>
@@ -85,6 +85,16 @@
         <h3 class="text-xl font-semibold">- Latte -</h3>
         <p class="text-yellow-500">IDR 20K</p>
       </div>
+    </div> -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <?php foreach ($menus as $menu): ?>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center flex flex-col items-center">
+          <img src="storage/images/<?= $menu['menu_image']; ?>" alt="<?= $menu['menu_name']; ?>" class="rounded-lg mb-4 w-full h-48 object-cover">
+          <h3 class="text-xl font-semibold text-white"><?= $menu['menu_name']; ?></h3>
+          <p class="text-yellow-500 mt-2">IDR <?= $menu['price']; ?></p>
+          <p class="text-gray-400 mt-2"><?= $menu['description']; ?></p>
+        </div>
+      <?php endforeach; ?>
     </div>
   </section>
  
