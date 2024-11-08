@@ -10,7 +10,7 @@ class MenuModel {
     }
 
     public function getMenus() {
-        $sql = "SELECT id, menu_name, menu_image, description, price FROM menu";
+        $sql = "SELECT id, menu_name, menu_image, description, price FROM menus";
         $result = $this->conn->query($sql);
         $menus = [];
 

@@ -1,8 +1,6 @@
 <?php
 require_once 'controllers/MenuController.php';
-
 $menuController = new MenuController();
-// Memanggil method getMenus dari MenuController
 $menus = $menuController->getMenus();
 ?>
 
