@@ -1,3 +1,11 @@
+<?php
+require_once 'controllers/MenuController.php';
+
+$menuController = new MenuController();
+// Memanggil method getMenus dari MenuController
+$menus = $menuController->getMenus();
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -95,9 +103,9 @@
           <p class="text-gray-400 mt-2"><?= $menu['description']; ?></p>
         </div>
       <?php endforeach; ?>
-    </div>
+    </div>  
   </section>
- 
+
   <section id="products" class="py-20 px-6 bg-gray-800">
     <div class="text-center mb-10">
       <h2 class="text-3xl font-bold"><span class="text-yellow-500">Produk Unggulan</span> Kami</h2>
@@ -164,3 +172,7 @@
   <script src="assets/js/script.js"></script>
 </body>
 </html>
+
+
+
+
