@@ -38,7 +38,7 @@ $menus = $menuController->getMenus();
     <button id="modal-button" class="py-2 px-4 bg-yellow-500 hover:bg-yellow-400 text-xs">Tambah Menu</button>
   </div>
 
-  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
+  <div id="add-menu" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
     <form action="../controllers/MenuController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
       <button id="modal-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
         <i data-feather="x"></i>
@@ -76,7 +76,8 @@ $menus = $menuController->getMenus();
             <a href="../controllers/MenuController.php?id=<?= $menu['id']; ?>" class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out">
               <i data-feather="trash-2"></i>
             </a>
-            <a href="#" class="bg-yellow-500 p-3 hover:bg-yellow-400 transition duration-300 ease-in-out flex items-center justify-center">
+            <a href="#" class="bg-yellow-500 p-3 hover:bg-yellow-400 transition duration-300 ease-in-out flex items-center justify-center edit-button"
+              data-menu='<?= json_encode($menu); ?>'>
               <i data-feather="edit"></i>
             </a>
           </div>
@@ -89,12 +90,35 @@ $menus = $menuController->getMenus();
     </div>
   </section>
 
+  <div id="update-menu" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
+    <form action="../controllers/MenuController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
+      <button id="update-modal-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
+        <i data-feather="x"></i>
+      </button>
+
+      <input type="hidden" id="update-menu-id" name="id" value="<?= $menu['id']; ?>">
+
+      <label for="update-menu-name" class="block mt-2">Nama Menu</label>
+      <input type="text" id="update-menu-name" name="menu_name" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
+
+      <label for="update-description" class="block mt-4">Deskripsi</label>
+      <textarea id="update-description" name="description" class="w-full p-2 mt-1 focus:outline-none text-gray-900" rows="2"></textarea>
+
+      <label for="update-price" class="block mt-4">Harga</label>
+      <input type="text" id="update-price" name="price" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
+
+      <label for="update-menu-image" class="block mt-4">Gambar Menu</label>
+      <input type="file" id="update-menu-image" name="menu_image" class="w-full p-2 mt-1 text-gray-900">
+      <button type="submit" class="mt-4 w-full py-2 bg-yellow-500 hover:bg-yellow-400 text-white font-semibold rounded-lg transition duration-300 ease-in-out">UPDATE</button>
+    </form>
+  </div>
+
   <script>
     feather.replace();
 
     const modalButton = document.getElementById('modal-button');
     const modalClose = document.getElementById('modal-close');
-    const modal = document.getElementById('modal');
+    const modal = document.getElementById('add-menu');
 
     modalButton.addEventListener('click', function() {
       modal.classList.remove('opacity-0', 'pointer-events-none');
@@ -104,6 +128,32 @@ $menus = $menuController->getMenus();
     modalClose.addEventListener('click', function() {
       modal.classList.remove('opacity-100', 'pointer-events-auto');
       modal.classList.add('opacity-0', 'pointer-events-none');
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('update-menu');
+      const modalClose = document.getElementById('update-modal-close');
+      const menuIdInput = document.getElementById('update-menu-id');
+      const menuNameInput = document.getElementById('update-menu-name');
+      const descriptionInput = document.getElementById('update-description');
+      const priceInput = document.getElementById('update-price');
+
+      document.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', function() {
+          const menu = JSON.parse(this.dataset.menu);
+
+          menuIdInput.value = menu.id;
+          menuNameInput.value = menu.menu_name;
+          descriptionInput.value = menu.description;
+          priceInput.value = menu.price;
+
+          modal.classList.remove('opacity-0', 'pointer-events-none');
+        });
+      });
+
+      modalClose.addEventListener('click', function() {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+      });
     });
   </script>
 </body>

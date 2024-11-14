@@ -56,6 +56,33 @@ class MenuModel {
         } else {
             return false;
         }
-    }       
+    }  
+    
+    public function updateMenu($id, $menuName, $description, $price, $menuImage = null) {
+        if ($menuImage) {
+            $sql = "SELECT menu_image FROM menus WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $stmt->bind_result($currentImage);
+            $stmt->fetch();
+            $stmt->close();
+    
+            $filePath = "../storage/images/" . $currentImage;
+            if (file_exists($filePath) && $currentImage) {
+                unlink($filePath);
+            }
+    
+            $sql = "UPDATE menus SET menu_name = ?, description = ?, price = ?, menu_image = ? WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("ssdsi", $menuName, $description, $price, $menuImage, $id);
+        } else {
+            $sql = "UPDATE menus SET menu_name = ?, description = ?, price = ? WHERE id = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("ssdi", $menuName, $description, $price, $id);
+        }
+    
+        return $stmt->execute();
+    }
 }
 ?>
