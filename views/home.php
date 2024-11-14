@@ -47,7 +47,7 @@ $menus = $menuController->getMenus();
       <input type="text" id="menu-name" name="menu_name" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
 
       <label for="description" class="block mt-4">Deskripsi</label>
-      <textarea id="description" name="description" class="w-full p-2 mt-1 focus:outline-none text-gray-900" rows="2" required></textarea>
+      <textarea id="description" name="description" class="w-full p-2 mt-1 focus:outline-none text-gray-900" rows="2"></textarea>
 
       <label for="price" class="block mt-4">Harga</label>
       <input type="text" id="price" name="price" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
@@ -73,8 +73,7 @@ $menus = $menuController->getMenus();
       <?php foreach ($menus as $menu): ?>
         <div class="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center">
           <div class="flex justify-center gap-4 mb-4">
-            <a href="../controllers/MenuController.php?action=delete&menu_id=<?= $menu['id']; ?>"
-              class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out">
+            <a href="../controllers/MenuController.php?id=<?= $menu['id']; ?>" class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out">
               <i data-feather="trash-2"></i>
             </a>
             <a href="#" class="bg-yellow-500 p-3 hover:bg-yellow-400 transition duration-300 ease-in-out flex items-center justify-center">

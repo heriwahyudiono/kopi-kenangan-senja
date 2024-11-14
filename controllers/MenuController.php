@@ -18,14 +18,15 @@ class MenuController {
             $menuName = $_POST['menu_name'];
             $description = $_POST['description'];
             $price = $_POST['price'];
-
+    
             if (isset($_FILES['menu_image'])) {
                 $targetDir = '../storage/images/';
-                $fileName = basename($_FILES['menu_image']['name']);
+                $fileExtension = pathinfo($_FILES['menu_image']['name'], PATHINFO_EXTENSION);
+                $fileName = uniqid() . '.' . $fileExtension;
                 $targetFilePath = $targetDir . $fileName;
-
+    
                 move_uploaded_file($_FILES['menu_image']['tmp_name'], $targetFilePath);
-
+    
                 if ($this->model->addMenu($menuName, $description, $price, $fileName)) {
                     $_SESSION['message'] = ['type' => 'success', 'text' => 'Data menu berhasil ditambahkan'];
                 } else {
@@ -35,31 +36,27 @@ class MenuController {
             header("Location: ../views/home.php");
             exit();
         }
-    }
+    }    
 
     public function deleteMenu() {
-        if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['menu_id'])) {
-            $menuId = $_GET['menu_id'];
-            if ($this->model->deleteMenu($menuId)) {
-                $_SESSION['message'] = ['type' => 'success', 'text' => 'Menu berhasil dihapus'];
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            if ($this->model->deleteMenu($id)) {
+                $_SESSION['message'] = ['type' => 'success', 'text' => 'Data menu berhasil dihapus'];
             } else {
-                $_SESSION['message'] = ['type' => 'error', 'text' => 'Terjadi kesalahan saat menghapus menu'];
+                $_SESSION['message'] = ['type' => 'error', 'text' => 'Terjadi kesalahan saat menghapus data menu'];
             }
+            header("Location: ../views/home.php");
+            exit();
         }
-        header("Location: ../views/home.php");
-        exit();
     }
 }
 
 $controller = new MenuController();
 
-$controller = new MenuController();
+$controller->addMenu();
 
-if (isset($_GET['action'])) {
-    if ($_GET['action'] === 'delete') {
-        $controller->deleteMenu();
-    }
-} else {
-    $controller->addMenu();
+if (isset($_GET['id'])) {
+    $controller->deleteMenu();
 }
 ?>
