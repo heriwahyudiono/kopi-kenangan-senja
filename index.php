@@ -47,18 +47,42 @@ $menus = $menuController->getMenus();
       <a href="#contact" class="hover:text-yellow-500">Kontak</a>
     </nav>
   </aside>
-  
+
   <section id="home" class="min-h-screen bg-cover bg-center flex items-center justify-center" style="background-image: url('assets/img/header-bg.jpeg');">
     <div class="bg-black bg-opacity-50 p-10 text-center rounded-lg mx-6">
       <h1 class="text-4xl font-bold mb-4">Mari Nikmati Secangkir <span class="text-yellow-500">Kopi</span></h1>
       <p class="text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, enim.</p>
       <div class="mt-6 flex gap-3 justify-center">
         <a href="" class="p-3 bg-white text-gray-900 hover:bg-gray-400">Lihat Pesanan</a>
-        <a href="../views/home.php" class="p-3 bg-blue-500 hover:bg-blue-400">Masuk</a>
+        <a href="#" id="modal-button" class="p-3 bg-blue-500 hover:bg-blue-400">Masuk</a>
       </div>
     </div>
   </section>
- 
+
+  <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-100 pointer-events-auto transition-opacity duration-500 ease-in-out">
+    <form action="../controllers/UserController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
+      <button id="modal-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
+        <i data-feather="x"></i>
+      </button>
+
+      <?php if (isset($_SESSION['message'])): ?>
+        <div class="alert <?= ($_SESSION['message_type'] == 'error') ? 'bg-red-500' : 'bg-green-500' ?> text-white p-4 rounded mb-4">
+          <?= $_SESSION['message']; ?>
+        </div>
+        <?php unset($_SESSION['message']);
+        unset($_SESSION['message_type']); ?>
+      <?php endif; ?>
+
+      <label for="email" class="block mt-2">Email</label>
+      <input type="text" id="email" name="email" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
+
+      <label for="password" class="block mt-4">Password</label>
+      <input type="password" id="password" name="password" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
+
+      <button type="submit" class="mt-4 w-full py-2 bg-yellow-500 hover:bg-yellow-400 text-white font-semibold rounded-lg transition duration-300 ease-in-out">LOGIN</button>
+    </form>
+  </div>
+
   <section id="about" class="py-20 px-6 bg-gray-800">
     <div class="text-center mb-10">
       <h2 class="text-3xl font-bold"><span class="text-yellow-500">Tentang</span> Kami</h2>
@@ -96,7 +120,7 @@ $menus = $menuController->getMenus();
           <p class="text-gray-400 mt-2"><?= $menu['description']; ?></p>
         </div>
       <?php endforeach; ?>
-    </div>  
+    </div>
   </section>
 
   <section id="products" class="py-20 px-6 bg-gray-800">
@@ -121,9 +145,9 @@ $menus = $menuController->getMenus();
         </div>
         <p class="text-yellow-500">IDR 30K <span class="line-through text-gray-400">IDR 55K</span></p>
       </div>
-    </div>    
+    </div>
   </section>
-  
+
   <section id="contact" class="py-20 px-6 bg-gray-900">
     <div class="text-center mb-10">
       <h2 class="text-3xl font-bold"><span class="text-yellow-500">Kontak</span> Kami</h2>
@@ -157,15 +181,25 @@ $menus = $menuController->getMenus();
       <a href="#" class="text-gray-400 hover:text-yellow-500 mx-2">Privacy Policy | Terms of Service</a>
     </div>
   </footer>
- 
+
   <script>
     feather.replace();
+
+    const modalButton = document.getElementById('modal-button');
+    const modalClose = document.getElementById('modal-close');
+    const modal = document.getElementById('login-modal');
+
+    modalButton.addEventListener('click', function() {
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100', 'pointer-events-auto');
+    });
+
+    modalClose.addEventListener('click', function() {
+      modal.classList.remove('opacity-100', 'pointer-events-auto');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+    });
   </script>
-  
+
   <script src="assets/js/script.js"></script>
 </body>
 </html>
-
-
-
-
