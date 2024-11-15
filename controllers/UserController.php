@@ -22,7 +22,7 @@ class UserController {
                 header("Location: ../index.php");
                 exit;
             } elseif ($user === false) {
-                $_SESSION['message'] = 'Password yang Anda masukkan salah';
+                $_SESSION['message'] = 'Password salah';
                 $_SESSION['message_type'] = 'error';
                 header("Location: ../index.php");
                 exit;
