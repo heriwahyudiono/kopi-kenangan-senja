@@ -1,4 +1,13 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    header("Location: ../index.php"); 
+    exit();
+}
+
+$user = $_SESSION['user']; 
+
 require_once __DIR__ . '/../controllers/MenuController.php';
 $menuController = new MenuController();
 $menus = $menuController->getMenus();
@@ -20,7 +29,7 @@ $menus = $menuController->getMenus();
   <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-800 bg-opacity-80 py-4 px-6 flex justify-between items-center border-b border-gray-700">
     <a href="#" class="text-2xl font-bold italic text-white">kenangan<span class="text-yellow-500">senja</span></a>
     <div class="flex space-x-4 items-center">
-      <span class="hidden md:block">Heri Wahyudiono</span>
+      <span class="hidden md:block"><?= htmlspecialchars($user['name']); ?></span>
       <a href="#" id="user" class="hover:text-yellow-500"><i data-feather="user"></i></a>
       <a href="#" class="md:hidden hover:text-yellow-500"><i data-feather="menu"></i></a>
     </div>
@@ -28,8 +37,8 @@ $menus = $menuController->getMenus();
 
   <aside class="h-screen mt-16 fixed w-64 bg-white text-black shadow-lg hidden md:block">
     <nav class="flex flex-col h-full py-8">
-      <a href="#" class="hover:bg-yellow-100 py-2 px-8">Menu</a>
-      <a href="#" class="hover:bg-yellow-100 py-2 px-8">Pesanan</a>
+      <a href="home.php" class="hover:bg-yellow-100 py-2 px-8">Menu</a>
+      <a href="orders.php" class="hover:bg-yellow-100 py-2 px-8">Pesanan</a>
       <a href="#" class="hover:bg-yellow-100 py-2 px-8">Transaksi</a>
     </nav>
   </aside>
