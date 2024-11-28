@@ -11,7 +11,7 @@
     <div class="flex items-center justify-center min-h-screen">
         <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-center text-amber-800">Kopi Kenangan Senja</h2>
-            <p class="text-center text-sm text-amber-600">Daftar buat dapetin promo!</p>
+            <p class="text-center text-sm text-amber-600">Daftar buat dapetin promo</p>
             <?php if (isset($_SESSION['message'])): ?>
                 <div class="p-4 mt-4 text-center text-white rounded-md 
                     <?php echo $_SESSION['message_type'] === 'success' ? 'bg-green-500' : 'bg-red-500'; ?>">
@@ -31,14 +31,6 @@
                     <input type="email" name="email" id="email" required
                         class="w-full px-4 py-2 mt-1 text-sm text-amber-900 bg-amber-50 border border-amber-300 rounded-md focus:ring-amber-500 focus:border-amber-500">
                 </div>
-                <!-- <div>
-                    <label for="role" class="block text-sm font-medium text-amber-800">Role:</label>
-                    <select name="role" id="role"
-                        class="w-full px-4 py-2 mt-1 text-sm text-amber-900 bg-amber-50 border border-amber-300 rounded-md focus:ring-amber-500 focus:border-amber-500">
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div> -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-amber-800">Password:</label>
                     <input type="password" name="password" id="password" required

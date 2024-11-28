@@ -2,13 +2,13 @@
 session_start();
 
 if (!isset($_SESSION['user'])) {
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
     exit();
 }
 
 $user = $_SESSION['user'];
 
-require_once __DIR__ . '/../controllers/TransactionController.php';
+require_once __DIR__ . '/../../controllers/TransactionController.php';
 
 $transactionController = new TransactionController();
 $transactions = $transactionController->getTransactions();
@@ -16,7 +16,6 @@ $transactions = $transactionController->getTransactions();
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +30,6 @@ $transactions = $transactionController->getTransactions();
         }
     </style>
 </head>
-
 <body class="bg-gray-100">
     <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-800 bg-opacity-90 py-4 px-6 flex justify-between items-center shadow-md">
         <a href="#" class="text-2xl font-bold italic text-white">
@@ -63,6 +61,7 @@ $transactions = $transactionController->getTransactions();
                         <th class="px-6 py-3 border">Jumlah</th>
                         <th class="px-6 py-3 border">Harga</th>
                         <th class="px-6 py-3 border">Status</th>
+                        <th class="px-6 py-3 border">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,6 +74,19 @@ $transactions = $transactionController->getTransactions();
                                 <td class="px-6 py-4"><?= htmlspecialchars($transaction['price']); ?></td>
                                 <td class="px-6 py-4 text-green-500">
                                     <?= htmlspecialchars($transaction['status']); ?>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <?php if ($transaction['status'] === "not yet paid"): ?>
+                                        <form action="../../controllers/ConfirmPaymentController.php" method="POST">
+                                            <input type="hidden" name="transaction_id" value="<?= htmlspecialchars($transaction['transaction_id']); ?>">
+                                            <input type="hidden" name="status" value="paid">
+                                            <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white text-xs font-semibold py-1 px-3 rounded-full">
+                                                Confirm
+                                            </button>
+                                        </form>
+                                    <?php elseif ($transaction['status'] === "paid"): ?>
+                                        <span>Completed</span>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -92,5 +104,4 @@ $transactions = $transactionController->getTransactions();
         feather.replace();
     </script>
 </body>
-
 </html>

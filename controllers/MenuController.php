@@ -33,7 +33,7 @@ class MenuController {
                     $_SESSION['message'] = ['type' => 'error', 'text' => 'Terjadi kesalahan saat menambahkan data menu'];
                 }
             }
-            header("Location: ../views/home.php");
+            header("Location: ../views/admin/home.php");
             exit();
         }
     }    
@@ -46,7 +46,7 @@ class MenuController {
             } else {
                 $_SESSION['message'] = ['type' => 'error', 'text' => 'Terjadi kesalahan saat menghapus data menu'];
             }
-            header("Location: ../views/home.php");
+            header("Location: ../views/admin/home.php");
             exit();
         }
     }
@@ -75,7 +75,7 @@ class MenuController {
                 $_SESSION['message'] = ['type' => 'error', 'text' => 'Terjadi kesalahan saat memperbarui menu'];
             }
     
-            header("Location: ../views/home.php");
+            header("Location: ../views/admin/home.php");
             exit();
         }
     }    
@@ -83,8 +83,8 @@ class MenuController {
 
 $controller = new MenuController();
 
-$controller->updateMenu();
 $controller->addMenu();
+$controller->updateMenu();
 
 if (isset($_GET['id'])) {
     $controller->deleteMenu();

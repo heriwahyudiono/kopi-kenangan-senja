@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['user'])) {
-  header("Location: ../index.php");
+  header("Location: ../../index.php");
   exit();
 }
 
@@ -15,7 +15,6 @@ $menus = $menuController->getMenus();
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible=" IE="edge">
@@ -26,7 +25,6 @@ $menus = $menuController->getMenus();
   <link rel="stylesheet" href="assets/css/style.css">
   <title>Kopi Kenangan Senja</title>
 </head>
-
 <body class="bg-gray-900 text-white font-poppins">
   <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-800 bg-opacity-80 py-4 px-6 flex justify-between items-center border-b border-gray-700">
     <a href="#" class="text-2xl font-bold italic text-white">kenangan<span class="text-yellow-500">senja</span></a>
@@ -80,7 +78,7 @@ $menus = $menuController->getMenus();
     </div>
   </section>
 
-  <div id="modal-order" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
+  <div id="order-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
     <form action="../../controllers/OrderController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
       <button id="order-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
         <i data-feather="x"></i>
@@ -103,34 +101,11 @@ $menus = $menuController->getMenus();
     </form>
   </div>
 
-  <div id="update-menu" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
-    <form action="../controllers/MenuController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
-      <button id="update-modal-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
-        <i data-feather="x"></i>
-      </button>
-
-      <input type="hidden" id="update-menu-id" name="id" value="<?= $menu['id']; ?>">
-
-      <label for="update-menu-name" class="block mt-2">Nama Menu</label>
-      <input type="text" id="update-menu-name" name="menu_name" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
-
-      <label for="update-description" class="block mt-4">Deskripsi</label>
-      <textarea id="update-description" name="description" class="w-full p-2 mt-1 focus:outline-none text-gray-900" rows="2"></textarea>
-
-      <label for="update-price" class="block mt-4">Harga</label>
-      <input type="text" id="update-price" name="price" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
-
-      <label for="update-menu-image" class="block mt-4">Gambar Menu</label>
-      <input type="file" id="update-menu-image" name="menu_image" class="w-full p-2 mt-1 text-gray-900">
-      <button type="submit" class="mt-4 w-full py-2 bg-yellow-500 hover:bg-yellow-400 text-white font-semibold rounded-lg transition duration-300 ease-in-out">UPDATE</button>
-    </form>
-  </div>
-
   <script>
     feather.replace();
 
     const orderButton = document.getElementById('order-button');
-    const modalOrder = document.getElementById('modal-order');
+    const modalOrder = document.getElementById('order-modal');
     const orderClose = document.getElementById('order-close');
 
     orderButton.addEventListener('click', function() {
@@ -143,7 +118,5 @@ $menus = $menuController->getMenus();
       modalOrder.classList.add('opacity-0', 'pointer-events-none');
     });
   </script>
-
 </body>
-
 </html>

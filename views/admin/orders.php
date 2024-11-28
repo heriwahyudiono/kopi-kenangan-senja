@@ -2,13 +2,13 @@
 session_start();
 
 if (!isset($_SESSION['user'])) {
-  header("Location: ../index.php");
+  header("Location: ../../index.php");
   exit();
 }
 
 $user = $_SESSION['user'];
 
-require_once __DIR__ . '/../controllers/OrderController.php';
+require_once __DIR__ . '/../../controllers/OrderController.php';
 
 $orderController = new OrderController();
 $orders = $orderController->getOrders();
@@ -16,7 +16,6 @@ $orders = $orderController->getOrders();
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +30,6 @@ $orders = $orderController->getOrders();
     }
   </style>
 </head>
-
 <body class="bg-gray-100">
   <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-800 bg-opacity-90 py-4 px-6 flex justify-between items-center shadow-md">
     <a href="#" class="text-2xl font-bold italic text-white">
@@ -67,53 +65,53 @@ $orders = $orderController->getOrders();
           </tr>
         </thead>
         <tbody>
-    <?php if (!empty($orders)): ?>
-        <?php foreach ($orders as $order): ?>
-            <tr class="border-b hover:bg-gray-100">
+          <?php if (!empty($orders)): ?>
+            <?php foreach ($orders as $order): ?>
+              <tr class="border-b hover:bg-gray-100">
                 <td class="px-6 py-4"><?= htmlspecialchars($order['orderer_name']); ?></td>
                 <td class="px-6 py-4"><?= htmlspecialchars($order['menu_name']); ?></td>
                 <td class="px-6 py-4"><?= htmlspecialchars($order['quantity']); ?></td>
                 <td class="px-6 py-4"><?= htmlspecialchars($order['table_number']); ?></td>
                 <td class="px-6 py-4 <?= $order['status'] === 'waiting confirmation' ? 'text-yellow-500' : ($order['status'] === 'confirmed' ? 'text-blue-500' : ($order['status'] === 'process' ? 'text-purple-500' : 'text-green-500')); ?>">
-                    <?= htmlspecialchars($order['status']); ?>
+                  <?= htmlspecialchars($order['status']); ?>
                 </td>
                 <td class="px-6 py-4">
-                    <?php if ($order['status'] === "waiting confirmation"): ?>
-                        <form action="../controllers/ConfirmOrderController.php" method="POST">
-                            <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
-                            <input type="hidden" name="status" value="confirmed">
-                            <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white text-xs font-semibold py-1 px-3 rounded-full">
-                                Confirm
-                            </button>
-                        </form>
-                    <?php elseif ($order['status'] === "confirmed"): ?>
-                        <form action="../controllers/ConfirmOrderController.php" method="POST">
-                            <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
-                            <input type="hidden" name="status" value="process">
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold py-1 px-3 rounded-full">
-                                Process
-                            </button>
-                        </form>
-                    <?php elseif ($order['status'] === "process"): ?>
-                        <form action="../controllers/ConfirmOrderController.php" method="POST">
-                            <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
-                            <input type="hidden" name="status" value="delivered">
-                            <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white text-xs font-semibold py-1 px-3 rounded-full">
-                                Deliver
-                            </button>
-                        </form>
-                    <?php elseif ($order['status'] === "delivered"): ?>
-                        <span class="text-gray-500">Completed</span>
-                    <?php endif; ?>
+                  <?php if ($order['status'] === "waiting confirmation"): ?>
+                    <form action="../../controllers/ConfirmOrderController.php" method="POST">
+                      <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
+                      <input type="hidden" name="status" value="confirmed">
+                      <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white text-xs font-semibold py-1 px-3 rounded-full">
+                        Confirm
+                      </button>
+                    </form>
+                  <?php elseif ($order['status'] === "confirmed"): ?>
+                    <form action="../../controllers/ConfirmOrderController.php" method="POST">
+                      <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
+                      <input type="hidden" name="status" value="process">
+                      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold py-1 px-3 rounded-full">
+                        Process
+                      </button>
+                    </form>
+                  <?php elseif ($order['status'] === "process"): ?>
+                    <form action="../../controllers/ConfirmOrderController.php" method="POST">
+                      <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
+                      <input type="hidden" name="status" value="delivered">
+                      <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white text-xs font-semibold py-1 px-3 rounded-full">
+                        Deliver
+                      </button>
+                    </form>
+                  <?php elseif ($order['status'] === "delivered"): ?>
+                    <span>Completed</span>
+                  <?php endif; ?>
                 </td>
+              </tr>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <tr>
+              <td colspan="6" class="text-center px-6 py-4 text-gray-500">Belum ada pesanan</td>
             </tr>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <tr>
-            <td colspan="6" class="text-center px-6 py-4 text-gray-500">Belum ada pesanan</td>
-        </tr>
-    <?php endif; ?>
-</tbody>
+          <?php endif; ?>
+        </tbody>
       </table>
     </div>
   </div>
@@ -122,5 +120,4 @@ $orders = $orderController->getOrders();
     feather.replace();
   </script>
 </body>
-
 </html>

@@ -9,18 +9,6 @@ CREATE TABLE users (
   password VARCHAR(255)
 );
 
-CREATE TABLE orders (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  menu_id INT(11),
-  orderer_id INT(11),
-  orderer_name VARCHAR(255),
-  quantity VARCHAR(255),
-  table_number VARCHAR(255),
-  status VARCHAR(255),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
 INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
 (1, 'Admin', 'kenangansenja@gmail.com', '$2y$10$nmVj3/M3ThvpM3OQdYU2B.MQ9fJWL7vpf90dawhDXobbY47xuK8Su');
 
@@ -34,10 +22,22 @@ CREATE TABLE menus (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  menu_id INT(11),
+  orderer_id INT(11),
+  orderer_name VARCHAR(255),
+  quantity VARCHAR(255),
+  table_number VARCHAR(255),
+  status ENUM('waiting confirmation', 'confirmed', 'process', 'delivered'),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 CREATE TABLE transactions (
   id INT AUTO_INCREMENT PRIMARY KEY,
   order_id INT(11),
-  status VARCHAR(255) DEFAULT 'success',
+  status ENUM('not yet paid', 'paid') DEFAULT 'not yet paid',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

@@ -6,7 +6,6 @@ $menus = $menuController->getMenus();
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +16,6 @@ $menus = $menuController->getMenus();
   <link rel="stylesheet" href="assets/css/style.css">
   <title>Kopi Kenangan Senja</title>
 </head>
-
 <body class="bg-gray-900 text-white font-poppins">
   <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-800 bg-opacity-80 py-4 px-6 flex justify-between items-center border-b border-gray-700">
     <a href="#" class="text-2xl font-bold italic text-white">kenangan<span class="text-yellow-500">senja</span></a>
@@ -61,8 +59,8 @@ $menus = $menuController->getMenus();
     </div>
   </section>
 
-  <div id="modal-login" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
-    <form action="../controllers/UserController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
+  <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
+    <form action="../controllers/LoginController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
       <button id="login-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
         <i data-feather="x"></i>
       </button>
@@ -81,7 +79,7 @@ $menus = $menuController->getMenus();
       <label for="password" class="block mt-4">Password</label>
       <input type="password" id="password" name="password" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
 
-      <span>Belum punya akun? <a href="views/auth/register.php" class="text-blue-500">Daftar sekarang!</a></span>
+      <span class="text-gray-900">Don't have an account? <a href="views/auth/register.php" class="text-blue-600">Sign up</a></span>
 
       <button type="submit" class="mt-4 w-full py-2 bg-yellow-500 hover:bg-yellow-400 text-white font-semibold rounded-lg transition duration-300 ease-in-out">LOGIN</button>
     </form>
@@ -124,7 +122,7 @@ $menus = $menuController->getMenus();
       </div>
     </section>
 
-    <div id="modal-order" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
+    <div id="order-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
       <form action="../controllers/OrderController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
         <button id="order-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
           <i data-feather="x"></i>
@@ -209,35 +207,32 @@ $menus = $menuController->getMenus();
     feather.replace();
 
     const loginButton = document.getElementById('login-button');
-    const modalLogin = document.getElementById('modal-login');
+    const loginModal = document.getElementById('login-modal');
     const loginClose = document.getElementById('login-close');
 
     loginButton.addEventListener('click', function() {
-      modalLogin.classList.remove('opacity-0', 'pointer-events-none');
-      modalLogin.classList.add('opacity-100', 'pointer-events-auto');
+      loginModal.classList.remove('opacity-0', 'pointer-events-none');
+      loginModal.classList.add('opacity-100', 'pointer-events-auto');
     });
 
     loginClose.addEventListener('click', function() {
-      modalLogin.classList.remove('opacity-100', 'pointer-events-auto');
-      modalLogin.classList.add('opacity-0', 'pointer-events-none');
+      loginModal.classList.remove('opacity-100', 'pointer-events-auto');
+      loginModal.classList.add('opacity-0', 'pointer-events-none');
     });
 
     const orderButton = document.getElementById('order-button');
-    const modalOrder = document.getElementById('modal-order');
+    const orderModal = document.getElementById('order-modal');
     const orderClose = document.getElementById('order-close');
 
     orderButton.addEventListener('click', function() {
-      modalOrder.classList.remove('opacity-0', 'pointer-events-none');
-      modalOrder.classList.add('opacity-100', 'pointer-events-auto');
+      orderModal.classList.remove('opacity-0', 'pointer-events-none');
+      orderModal.classList.add('opacity-100', 'pointer-events-auto');
     });
 
     orderClose.addEventListener('click', function() {
-      modalOrder.classList.remove('opacity-100', 'pointer-events-auto');
-      modalOrder.classList.add('opacity-0', 'pointer-events-none');
+      orderModal.classList.remove('opacity-100', 'pointer-events-auto');
+      orderModal.classList.add('opacity-0', 'pointer-events-none');
     });
   </script>
-
-  <script src="assets/js/script.js"></script>
 </body>
-
 </html>

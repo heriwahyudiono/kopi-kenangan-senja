@@ -9,6 +9,21 @@ class TransactionModel {
         $this->conn = $db->openConnection();
     }
 
+    public function confirmPayment($transaction_id, $status)
+    {
+        $stmt = $this->conn->prepare("UPDATE transactions SET status = ?, updated_at = NOW() WHERE id = ?");
+        $stmt->bind_param("si", $status, $transaction_id);
+        return $stmt->execute();
+    }
+
+    public function transaction($order_id) {
+        $sql = "INSERT INTO transactions (order_id) VALUES (?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $order_id);
+        
+        return $stmt->execute();
+    }  
+
     public function getTransactions() {
         $sql = "
             SELECT 

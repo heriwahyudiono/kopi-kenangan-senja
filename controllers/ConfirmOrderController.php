@@ -27,7 +27,7 @@ class ConfirmOrderController
                 $_SESSION['message'] = ['type' => 'error', 'text' => 'Gagal memperbarui status pesanan'];
             }
 
-            header("Location: ../views/orders.php");
+            header("Location: ../views/admin/orders.php");
             exit();
         }
     }

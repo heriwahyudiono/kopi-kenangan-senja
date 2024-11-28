@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['user'])) {
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
     exit();
 }
 
@@ -90,5 +90,4 @@ $transactions = $transactionController->getTransactions();
         feather.replace();
     </script>
 </body>
-
 </html>

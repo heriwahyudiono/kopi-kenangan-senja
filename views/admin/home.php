@@ -2,13 +2,13 @@
 session_start();
 
 if (!isset($_SESSION['user'])) {
-    header("Location: ../index.php"); 
-    exit();
+  header("Location: ../../index.php");
+  exit();
 }
 
-$user = $_SESSION['user']; 
+$user = $_SESSION['user'];
 
-require_once __DIR__ . '/../controllers/MenuController.php';
+require_once __DIR__ . '/../../controllers/MenuController.php';
 $menuController = new MenuController();
 $menus = $menuController->getMenus();
 ?>
@@ -47,8 +47,8 @@ $menus = $menuController->getMenus();
     <button id="modal-button" class="py-2 px-4 bg-yellow-500 hover:bg-yellow-400 text-xs">Tambah Menu</button>
   </div>
 
-  <div id="add-menu" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
-    <form action="../controllers/MenuController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
+  <div id="menu-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
+    <form action="../../controllers/MenuController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
       <button id="modal-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
         <i data-feather="x"></i>
       </button>
@@ -82,7 +82,7 @@ $menus = $menuController->getMenus();
       <?php foreach ($menus as $menu): ?>
         <div class="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center">
           <div class="flex justify-center gap-4 mb-4">
-            <a href="../controllers/MenuController.php?id=<?= $menu['id']; ?>" class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out">
+            <a href="../../controllers/MenuController.php?id=<?= $menu['id']; ?>" class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out">
               <i data-feather="trash-2"></i>
             </a>
             <a href="#" class="bg-yellow-500 p-3 hover:bg-yellow-400 transition duration-300 ease-in-out flex items-center justify-center edit-button"
@@ -90,7 +90,7 @@ $menus = $menuController->getMenus();
               <i data-feather="edit"></i>
             </a>
           </div>
-          <img src="../storage/images/<?= $menu['menu_image']; ?>" alt="<?= $menu['menu_name']; ?>" class="rounded-lg mb-4 w-full h-48 object-cover">
+          <img src="../../storage/images/<?= $menu['menu_image']; ?>" alt="<?= $menu['menu_name']; ?>" class="rounded-lg mb-4 w-full h-48 object-cover">
           <h3 class="text-xl font-semibold text-white"><?= $menu['menu_name']; ?></h3>
           <p class="text-yellow-500 mt-2">IDR <?= $menu['price']; ?></p>
           <p class="text-gray-400 mt-2"><?= $menu['description']; ?></p>
@@ -100,7 +100,7 @@ $menus = $menuController->getMenus();
   </section>
 
   <div id="update-menu" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
-    <form action="../controllers/MenuController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
+    <form action="../../controllers/MenuController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
       <button id="update-modal-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
         <i data-feather="x"></i>
       </button>
@@ -121,22 +121,22 @@ $menus = $menuController->getMenus();
       <button type="submit" class="mt-4 w-full py-2 bg-yellow-500 hover:bg-yellow-400 text-white font-semibold rounded-lg transition duration-300 ease-in-out">UPDATE</button>
     </form>
   </div>
-
+  
   <script>
     feather.replace();
 
     const modalButton = document.getElementById('modal-button');
     const modalClose = document.getElementById('modal-close');
-    const modal = document.getElementById('add-menu');
+    const menuModal = document.getElementById('menu-modal');
 
     modalButton.addEventListener('click', function() {
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      modal.classList.add('opacity-100', 'pointer-events-auto');
+      menuModal.classList.remove('opacity-0', 'pointer-events-none');
+      menuModal.classList.add('opacity-100', 'pointer-events-auto');
     });
 
     modalClose.addEventListener('click', function() {
-      modal.classList.remove('opacity-100', 'pointer-events-auto');
-      modal.classList.add('opacity-0', 'pointer-events-none');
+      menuModal.classList.remove('opacity-100', 'pointer-events-auto');
+      menuModal.classList.add('opacity-0', 'pointer-events-none');
     });
 
     document.addEventListener('DOMContentLoaded', function() {

@@ -9,6 +9,35 @@ class OrderModel {
         $this->conn = $db->openConnection();
     }
 
+    public function searchOrder($search) {
+        $sql = "
+            SELECT 
+                orders.id,
+                orders.orderer_name,
+                orders.quantity,
+                orders.table_number,
+                orders.status,
+                menus.menu_name
+            FROM orders
+            JOIN menus ON orders.menu_id = menus.id
+            WHERE orders.orderer_name LIKE ?
+            ORDER BY orders.created_at DESC
+        ";
+    
+        $stmt = $this->conn->prepare($sql);
+        $searchTerm = "%$search%";
+        $stmt->bind_param('s', $searchTerm);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $orders = [];
+        while ($row = $result->fetch_assoc()) {
+            $orders[] = $row;
+        }
+    
+        return $orders;
+    }
+    
     public function transaction($order_id) {
         $sql = "INSERT INTO transactions (order_id) VALUES (?)";
         $stmt = $this->conn->prepare($sql);
@@ -34,34 +63,43 @@ class OrderModel {
             return false;
         }
     }
-
-    public function getOrders() {
+    
+    public function getOrders($searchTerm = '') {
         $sql = "
             SELECT 
                 orders.id,
-                orders.orderer_id,  -- Menambahkan orderer_id
                 orders.orderer_name,
                 orders.quantity,
                 orders.table_number,
                 orders.status,
-                menus.menu_name,
-                menus.price
+                menus.menu_name
             FROM orders
             JOIN menus ON orders.menu_id = menus.id
-            ORDER BY orders.created_at DESC
         ";
-    
-        $result = $this->conn->query($sql);
-        $orders = [];
-    
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $orders[] = $row;
-            }
+
+        if (!empty($searchTerm)) {
+            $sql .= " WHERE orders.orderer_name LIKE ?";
         }
-    
+
+        $sql .= " ORDER BY orders.created_at DESC";
+
+        $stmt = $this->conn->prepare($sql);
+
+        if (!empty($searchTerm)) {
+            $searchParam = '%' . $searchTerm . '%';
+            $stmt->bind_param("s", $searchParam);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $orders = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $orders[] = $row;
+        }
+
         return $orders;
-    }    
+    }
 
     public function getOrderByUser($userId) {
         $sql = "
@@ -81,7 +119,7 @@ class OrderModel {
         ";
     
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $userId); // Binding userId ke query
+        $stmt->bind_param("i", $userId); 
         $stmt->execute();
         $result = $stmt->get_result();
     
@@ -94,6 +132,5 @@ class OrderModel {
     
         return $orders;
     }
-    
 }
 ?>

@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['user'])) {
-  header("Location: ../index.php");
+  header("Location: ../../index.php");
   exit();
 }
 
@@ -11,12 +11,11 @@ $user = $_SESSION['user'];
 require_once __DIR__ . '/../../controllers/OrderController.php';
 
 $orderController = new OrderController();
-$orders = $orderController->getOrderByUser($user['id']); // Menambahkan ID user ke metode getOrders
+$orders = $orderController->getOrderByUser($user['id']); 
 ?>
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +30,6 @@ $orders = $orderController->getOrderByUser($user['id']); // Menambahkan ID user 
     }
   </style>
 </head>
-
 <body class="bg-gray-100">
   <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-800 bg-opacity-90 py-4 px-6 flex justify-between items-center shadow-md">
     <a href="#" class="text-2xl font-bold italic text-white">
@@ -92,5 +90,4 @@ $orders = $orderController->getOrderByUser($user['id']); // Menambahkan ID user 
     feather.replace();
   </script>
 </body>
-
 </html>
