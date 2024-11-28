@@ -12,6 +12,7 @@ CREATE TABLE users (
 CREATE TABLE orders (
   id INT AUTO_INCREMENT PRIMARY KEY,
   menu_id INT(11),
+  orderer_id INT(11),
   orderer_name VARCHAR(255),
   quantity VARCHAR(255),
   table_number VARCHAR(255),
@@ -36,7 +37,7 @@ CREATE TABLE menus (
 CREATE TABLE transactions (
   id INT AUTO_INCREMENT PRIMARY KEY,
   order_id INT(11),
-  status VARCHAR(255) DEFAULT 'success';
+  status VARCHAR(255) DEFAULT 'success',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
