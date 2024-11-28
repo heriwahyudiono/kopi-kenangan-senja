@@ -5,7 +5,19 @@ CREATE TABLE users (
   id INT(11) AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255),
   email VARCHAR(255),
+  role ENUM('admin', 'user'),
   password VARCHAR(255)
+);
+
+CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  menu_id INT(11),
+  orderer_name VARCHAR(255),
+  quantity VARCHAR(255),
+  table_number VARCHAR(255),
+  status VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
@@ -21,13 +33,10 @@ CREATE TABLE menus (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE orders (
+CREATE TABLE transactions (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  menu_id INT(11),
-  orderer_name VARCHAR(255),
-  quantity VARCHAR(255),
-  table_number VARCHAR(255),
-  status VARCHAR(255),
+  order_id INT(11),
+  status VARCHAR(255) DEFAULT 'success';
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

@@ -81,6 +81,8 @@ $menus = $menuController->getMenus();
       <label for="password" class="block mt-4">Password</label>
       <input type="password" id="password" name="password" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
 
+      <span>Belum punya akun? <a href="views/auth/register.php" class="text-blue-500">Daftar sekarang!</a></span>
+
       <button type="submit" class="mt-4 w-full py-2 bg-yellow-500 hover:bg-yellow-400 text-white font-semibold rounded-lg transition duration-300 ease-in-out">LOGIN</button>
     </form>
   </div>

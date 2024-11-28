@@ -8,10 +8,10 @@ if (!isset($_SESSION['user'])) {
 
 $user = $_SESSION['user'];
 
-require_once __DIR__ . '/../controllers/OrderController.php';
+require_once __DIR__ . '/../../controllers/OrderController.php';
 
 $orderController = new OrderController();
-$orders = $orderController->getOrders();
+$orders = $orderController->getOrderByUser($user['id']); // Menambahkan ID user ke metode getOrders
 ?>
 
 <!DOCTYPE html>
@@ -53,67 +53,37 @@ $orders = $orderController->getOrders();
   </aside>
 
   <div class="container mx-auto mt-32 px-4 md:ml-72">
-    <h1 class="text-3xl font-bold text-gray-800 mb-6">Daftar Pesanan</h1>
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Pesanan Saya</h1>
     <div class="overflow-x-auto">
       <table class="min-w-full bg-white border rounded-lg shadow-md">
         <thead>
           <tr class="bg-gray-200 text-gray-700 text-left">
-            <th class="px-6 py-3 border">Nama Pemesan</th>
             <th class="px-6 py-3 border">Menu</th>
             <th class="px-6 py-3 border">Jumlah</th>
+            <th class="px-6 py-3 border">Harga</th>
             <th class="px-6 py-3 border">Nomor Meja</th>
             <th class="px-6 py-3 border">Status</th>
-            <th class="px-6 py-3 border">Action</th>
           </tr>
         </thead>
         <tbody>
-    <?php if (!empty($orders)): ?>
-        <?php foreach ($orders as $order): ?>
-            <tr class="border-b hover:bg-gray-100">
-                <td class="px-6 py-4"><?= htmlspecialchars($order['orderer_name']); ?></td>
+          <?php if (!empty($orders)): ?>
+            <?php foreach ($orders as $order): ?>
+              <tr class="border-b hover:bg-gray-100">
                 <td class="px-6 py-4"><?= htmlspecialchars($order['menu_name']); ?></td>
                 <td class="px-6 py-4"><?= htmlspecialchars($order['quantity']); ?></td>
+                <td class="px-6 py-4"><?= htmlspecialchars($order['price']); ?></td>
                 <td class="px-6 py-4"><?= htmlspecialchars($order['table_number']); ?></td>
                 <td class="px-6 py-4 <?= $order['status'] === 'waiting confirmation' ? 'text-yellow-500' : ($order['status'] === 'confirmed' ? 'text-blue-500' : ($order['status'] === 'process' ? 'text-purple-500' : 'text-green-500')); ?>">
-                    <?= htmlspecialchars($order['status']); ?>
+                  <?= htmlspecialchars($order['status']); ?>
                 </td>
-                <td class="px-6 py-4">
-                    <?php if ($order['status'] === "waiting confirmation"): ?>
-                        <form action="../controllers/ConfirmOrderController.php" method="POST">
-                            <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
-                            <input type="hidden" name="status" value="confirmed">
-                            <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white text-xs font-semibold py-1 px-3 rounded-full">
-                                Confirm
-                            </button>
-                        </form>
-                    <?php elseif ($order['status'] === "confirmed"): ?>
-                        <form action="../controllers/ConfirmOrderController.php" method="POST">
-                            <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
-                            <input type="hidden" name="status" value="process">
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold py-1 px-3 rounded-full">
-                                Process
-                            </button>
-                        </form>
-                    <?php elseif ($order['status'] === "process"): ?>
-                        <form action="../controllers/ConfirmOrderController.php" method="POST">
-                            <input type="hidden" name="order_id" value="<?= $order['id']; ?>">
-                            <input type="hidden" name="status" value="delivered">
-                            <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white text-xs font-semibold py-1 px-3 rounded-full">
-                                Deliver
-                            </button>
-                        </form>
-                    <?php elseif ($order['status'] === "delivered"): ?>
-                        <span class="text-gray-500">Completed</span>
-                    <?php endif; ?>
-                </td>
+              </tr>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <tr>
+              <td colspan="6" class="text-center px-6 py-4 text-gray-500">Belum ada pesanan</td>
             </tr>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <tr>
-            <td colspan="6" class="text-center px-6 py-4 text-gray-500">Belum ada pesanan</td>
-        </tr>
-    <?php endif; ?>
-</tbody>
+          <?php endif; ?>
+        </tbody>
       </table>
     </div>
   </div>
