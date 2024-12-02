@@ -49,7 +49,7 @@ $orders = $orderController->getOrders($searchTerm);
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="5" class="text-center px-6 py-4 text-gray-500">Pesanan tidak ditemukan</td>
+                        <td colspan="5" class="text-center px-6 py-4 text-gray-500">Belum ada pesanan lain</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
