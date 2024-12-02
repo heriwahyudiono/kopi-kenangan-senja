@@ -3,12 +3,14 @@ require_once '../models/UserModel.php';
 
 session_start();
 
-if (isset($_SESSION['id'])) {
-    $userModel = new UserModel();
-    $user = $userModel->getUserById($_SESSION['id']);
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
     $name = $user['name'];
     $email = $user['email'];
     $profilePicture = 'https://via.placeholder.com/150';
+} else {
+    header("Location: ../../index.php");
+    exit();
 }
 ?>
 

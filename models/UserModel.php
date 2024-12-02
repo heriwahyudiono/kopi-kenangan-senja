@@ -8,14 +8,20 @@ class UserModel {
         $this->conn = (new Connection())->openConnection();
     }
 
-    public function login($email) {
-        $sql = "SELECT id, name, email, password, role FROM users WHERE email = ?";
+    public function login($email)
+    {
+        $sql = "SELECT * FROM users WHERE email=?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        return $result->fetch_assoc(); 
+        if ($result->num_rows == 1) {
+            $user = $result->fetch_assoc();
+            return $user;
+        } else {
+            return null;
+        }
     }
 
     public function getUserById($id)

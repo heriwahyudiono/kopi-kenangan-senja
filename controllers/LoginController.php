@@ -1,58 +1,45 @@
 <?php
 session_start();
-require_once __DIR__ . '/../models/UserModel.php';
+require_once '../models/UserModel.php';
 
-class UserController {
-    private $userModel;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    public function __construct() {
-        $this->userModel = new UserModel();
-    }
+    $userModel = new UserModel();
+    $user = $userModel->login($email);
 
-    public function login() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = trim($_POST['email']);
-            $password = trim($_POST['password']);
-
-            $user = $this->userModel->login($email);
-
-            if (!$user) {
-                $_SESSION['message'] = [
-                    'type' => 'error',
-                    'text' => 'Email tidak terdaftar'
-                ];
-                header("Location: ../index.php");
-                exit;
-            }
-
-            if (!password_verify($password, $user['password'])) {
-                $_SESSION['message'] = [
-                    'type' => 'error',
-                    'text' => 'Password salah'
-                ];
-                header("Location: ../index.php");
-                exit;
-            }
-
+    if ($user) {
+        if (password_verify($password, $user['password'])) {
             $_SESSION['user'] = [
                 'id' => $user['id'],
                 'name' => $user['name'],
-                'email' => $user['email'],
-                'role' => $user['role'] 
+                'email' => $user['email']
             ];
 
             if ($user['role'] === 'admin') {
                 header("Location: ../views/admin/home.php");
             } elseif ($user['role'] === 'customer') {
                 header("Location: ../views/customer/home.php");
-            } else {
-                header("Location: ../index.php");
             }
+            exit();
+        } else {
+            $_SESSION['message'] = [
+                'type' => 'error',
+                'text' => 'Password salah'
+            ];
 
-            exit;
+            header("Location: ../index.php");
+            exit();
         }
+    } else {
+        $_SESSION['message'] = [
+            'type' => 'error',
+            'text' => 'Email tidak terdaftar'
+        ];
+        
+        header("Location: ../index.php");
+        exit();
     }
 }
-
-$controller = new UserController();
-$controller->login();
+?>
