@@ -18,24 +18,28 @@ class RegisterController {
             $confirmPassword = $_POST['confirm_password'];
     
             if ($password !== $confirmPassword) {
-                $_SESSION['message'] = 'Konfirmasi password tidak sama';
-                $_SESSION['message_type'] = 'error';
+                $_SESSION['message'] = [
+                    'type' => 'error',
+                    'text' => 'Konfirmasi password tidak sama'
+                ];
                 header("Location: ../views/auth/register.php");
                 exit;
             }
     
             $result = $this->userModel->register($name, $email, $role, $password);
     
-            if ($result === true) {
-                $_SESSION['message'] = 'Registrasi berhasil';
-                $_SESSION['message_type'] = 'success';
-                header("Location: ../views/customer/home.php");
-            } else {
-                $_SESSION['message'] = 'Email sudah terdaftar';
-                $_SESSION['message_type'] = 'error';
+            $result = $this->userModel->register($name, $email, $role, $password);
+
+            if ($result !== true) {
+                $_SESSION['message'] = [
+                    'type' => 'error',
+                    'text' => 'Email sudah terdaftar'
+                ];
                 header("Location: ../views/auth/register.php");
+            } else {
+                header("Location: ../views/customer/home.php");
             }
-            exit;
+            exit;            
         }
     }    
 }

@@ -22,7 +22,7 @@ $menus = $menuController->getMenus();
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/feather-icons"></script>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/style.css">
   <title>Kopi Kenangan Senja</title>
 </head>
 <body class="bg-gray-900 text-white font-poppins">
@@ -30,16 +30,29 @@ $menus = $menuController->getMenus();
     <a href="#" class="text-2xl font-bold italic text-white">kenangan<span class="text-yellow-500">senja</span></a>
     <div class="flex space-x-4 items-center">
       <span class="hidden md:block"><?= htmlspecialchars($user['name']); ?></span>
-      <a href="#" id="user" class="hover:text-yellow-500"><i data-feather="user"></i></a>
-      <a href="#" class="md:hidden hover:text-yellow-500"><i data-feather="menu"></i></a>
+      <a href="#" id="button-modal" class="hover:text-yellow-500"><i data-feather="user"></i></a>
+      <a href="#" id="menu-button" class="md:hidden hover:text-yellow-500"><i data-feather="menu"></i></a>
+      <a href="#" id="close-button" class="hidden md:hidden hover:text-yellow-500"><i data-feather="x"></i></a>
     </div>
   </nav>
 
-  <aside class="h-screen mt-16 fixed w-64 bg-white text-black shadow-lg hidden md:block">
+  <div id="modal-menu" class="bg-black bg-opacity-50 absolute top-14 right-4 z-50 hidden">
+    <div class="bg-white/60 backdrop-blur-lg py-4 rounded-lg shadow-lg w-48">
+      <ul>
+        <a href="../profile.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Profile</a>
+        <a href="../settings.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Settings</a>
+        <a href="../../controllers/LogoutController.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Logout</a>
+      </ul>
+    </div>
+  </div>
+
+  <?php include __DIR__ . '/../partials/aside.php'; ?>
+
+  <aside class="fixed top-0 h-full w-64 bg-white text-black shadow-lg z-50 md:hidden sidebar" id="sidenav">
     <nav class="flex flex-col h-full py-8">
-      <a href="home.php" class="hover:bg-yellow-100 py-2 px-8">Menu</a>
-      <a href="orders.php" class="hover:bg-yellow-100 py-2 px-8">Pesanan</a>
-      <a href="transactions.php" class="hover:bg-yellow-100 py-2 px-8">Transaksi</a>
+    <a href="home.php" class="hover:bg-yellow-100 py-2 px-8">Menu</a>
+    <a href="orders.php" class="hover:bg-yellow-100 py-2 px-8">Pesanan</a>
+    <a href="transactions.php" class="hover:bg-yellow-100 py-2 px-8">Transaksi</a>
     </nav>
   </aside>
 
@@ -48,7 +61,7 @@ $menus = $menuController->getMenus();
   </div>
 
   <div id="menu-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
-    <form action="../../controllers/MenuController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
+    <form action="../../controllers/AddMenuController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
       <button id="modal-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
         <i data-feather="x"></i>
       </button>
@@ -82,7 +95,7 @@ $menus = $menuController->getMenus();
       <?php foreach ($menus as $menu): ?>
         <div class="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center">
           <div class="flex justify-center gap-4 mb-4">
-            <a href="../../controllers/MenuController.php?id=<?= $menu['id']; ?>" class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out">
+            <a href="../../controllers/DeleteMenuController.php?id=<?= $menu['id']; ?>" class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out">
               <i data-feather="trash-2"></i>
             </a>
             <a href="#" class="bg-yellow-500 p-3 hover:bg-yellow-400 transition duration-300 ease-in-out flex items-center justify-center edit-button"
@@ -100,7 +113,7 @@ $menus = $menuController->getMenus();
   </section>
 
   <div id="update-menu" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
-    <form action="../../controllers/MenuController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
+    <form action="../../controllers/UpdateMenuController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
       <button id="update-modal-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
         <i data-feather="x"></i>
       </button>
@@ -121,9 +134,25 @@ $menus = $menuController->getMenus();
       <button type="submit" class="mt-4 w-full py-2 bg-yellow-500 hover:bg-yellow-400 text-white font-semibold rounded-lg transition duration-300 ease-in-out">UPDATE</button>
     </form>
   </div>
-  
+
   <script>
     feather.replace();
+
+    const toggleButton = document.getElementById('menu-button');
+    const sideNav = document.getElementById('sidenav');
+    const closeMenu = document.getElementById("close-button");
+
+    toggleButton.addEventListener('click', () => {
+        sideNav.classList.toggle('visible');
+        toggleButton.classList.toggle('hidden');
+        closeMenu.classList.toggle('hidden');
+    });
+
+    closeMenu.addEventListener('click', () => {
+        sideNav.classList.toggle('visible');
+        toggleButton.classList.toggle('hidden');
+        closeMenu.classList.toggle('hidden');
+    });
 
     const modalButton = document.getElementById('modal-button');
     const modalClose = document.getElementById('modal-close');
@@ -163,6 +192,13 @@ $menus = $menuController->getMenus();
       modalClose.addEventListener('click', function() {
         modal.classList.add('opacity-0', 'pointer-events-none');
       });
+    });
+
+    const buttonModal = document.getElementById('button-modal');
+    const modalMenu = document.getElementById('modal-menu');
+
+    buttonModal.addEventListener('click', () => {
+      modalMenu.classList.toggle('hidden');
     });
   </script>
 </body>

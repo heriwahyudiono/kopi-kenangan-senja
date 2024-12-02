@@ -8,35 +8,6 @@ class OrderModel {
         $db = new Connection();
         $this->conn = $db->openConnection();
     }
-
-    public function searchOrder($search) {
-        $sql = "
-            SELECT 
-                orders.id,
-                orders.orderer_name,
-                orders.quantity,
-                orders.table_number,
-                orders.status,
-                menus.menu_name
-            FROM orders
-            JOIN menus ON orders.menu_id = menus.id
-            WHERE orders.orderer_name LIKE ?
-            ORDER BY orders.created_at DESC
-        ";
-    
-        $stmt = $this->conn->prepare($sql);
-        $searchTerm = "%$search%";
-        $stmt->bind_param('s', $searchTerm);
-        $stmt->execute();
-        $result = $stmt->get_result();
-    
-        $orders = [];
-        while ($row = $result->fetch_assoc()) {
-            $orders[] = $row;
-        }
-    
-        return $orders;
-    }
     
     public function transaction($order_id) {
         $sql = "INSERT INTO transactions (order_id) VALUES (?)";
@@ -45,12 +16,6 @@ class OrderModel {
         
         return $stmt->execute();
     }    
-
-    public function confirmOrder($order_id, $status) {
-        $stmt = $this->conn->prepare("UPDATE orders SET status = ?, updated_at = NOW() WHERE id = ?");
-        $stmt->bind_param("si", $status, $order_id);
-        return $stmt->execute();
-    }
 
     public function order($menu_id, $orderer_id, $orderer_name, $quantity, $table_number, $status) {
         $sql = "INSERT INTO orders (menu_id, orderer_id, orderer_name, quantity, table_number, status) VALUES (?, ?, ?, ?, ?, ?)";
@@ -128,6 +93,41 @@ class OrderModel {
             while ($row = $result->fetch_assoc()) {
                 $orders[] = $row;
             }
+        }
+    
+        return $orders;
+    }
+
+    public function confirmOrder($order_id, $status) {
+        $stmt = $this->conn->prepare("UPDATE orders SET status = ?, updated_at = NOW() WHERE id = ?");
+        $stmt->bind_param("si", $status, $order_id);
+        return $stmt->execute();
+    }
+
+    public function searchOrder($search) {
+        $sql = "
+            SELECT 
+                orders.id,
+                orders.orderer_name,
+                orders.quantity,
+                orders.table_number,
+                orders.status,
+                menus.menu_name
+            FROM orders
+            JOIN menus ON orders.menu_id = menus.id
+            WHERE orders.orderer_name LIKE ?
+            ORDER BY orders.created_at DESC
+        ";
+    
+        $stmt = $this->conn->prepare($sql);
+        $searchTerm = "%$search%";
+        $stmt->bind_param('s', $searchTerm);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $orders = [];
+        while ($row = $result->fetch_assoc()) {
+            $orders[] = $row;
         }
     
         return $orders;

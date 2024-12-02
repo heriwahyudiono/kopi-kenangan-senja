@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +12,12 @@
     <div class="flex items-center justify-center min-h-screen">
         <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-center text-amber-800">Kopi Kenangan Senja</h2>
-            <p class="text-center text-sm text-amber-600">Daftar buat dapetin promo</p>
+            <p class="text-center text-sm text-amber-600">Daftar Buat Dapetin Promo</p>
             <?php if (isset($_SESSION['message'])): ?>
-                <div class="p-4 mt-4 text-center text-white rounded-md 
-                    <?php echo $_SESSION['message_type'] === 'success' ? 'bg-green-500' : 'bg-red-500'; ?>">
-                    <?php echo $_SESSION['message']; ?>
-                    <?php unset($_SESSION['message'], $_SESSION['message_type']); ?>
+                <div class="alert bg-red-500 text-white p-4 rounded mb-4">
+                    <?= $_SESSION['message']['text']; ?>
                 </div>
+                <?php unset($_SESSION['message']); ?>
             <?php endif; ?>
 
             <form action="../../controllers/RegisterController.php" method="POST" class="mt-6 space-y-4">

@@ -34,30 +34,6 @@ class MenuModel {
         }
     }
 
-    public function deleteMenu($id) {
-        $sql = "SELECT menu_image FROM menus WHERE id = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $stmt->bind_result($menuImage);
-        $stmt->fetch();
-        $stmt->close();
-    
-        $sql = "DELETE FROM menus WHERE id = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-    
-        if ($stmt->execute()) {
-            $filePath = "../storage/images/" . $menuImage;
-            if (file_exists($filePath)) {
-                unlink($filePath); 
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }  
-    
     public function updateMenu($id, $menuName, $description, $price, $menuImage = null) {
         if ($menuImage) {
             $sql = "SELECT menu_image FROM menus WHERE id = ?";
@@ -84,5 +60,29 @@ class MenuModel {
     
         return $stmt->execute();
     }
+
+    public function deleteMenu($id) {
+        $sql = "SELECT menu_image FROM menus WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->bind_result($menuImage);
+        $stmt->fetch();
+        $stmt->close();
+    
+        $sql = "DELETE FROM menus WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+    
+        if ($stmt->execute()) {
+            $filePath = "../storage/images/" . $menuImage;
+            if (file_exists($filePath)) {
+                unlink($filePath); 
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }  
 }
 ?>

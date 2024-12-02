@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once 'controllers/MenuController.php';
 $menuController = new MenuController();
 $menus = $menuController->getMenus();
@@ -28,7 +30,7 @@ $menus = $menuController->getMenus();
     </div>
     <div class="flex space-x-4">
       <a href="#" id="search-menu" class="hover:text-yellow-500"><i data-feather="search"></i></a>
-      <a href="#" id="shopping-cart-button" class="hover:text-yellow-500"><i data-feather="shopping-cart"></i></a>
+      <a href="charts.php" id="shopping-cart-button" class="hover:text-yellow-500"><i data-feather="shopping-cart"></i></a>
       <a href="#" id="menu-button" class="md:hidden hover:text-yellow-500"><i data-feather="menu"></i></a>
       <a href="#" class="hidden md:hidden hover:text-yellow-500" id="close-button"><i data-feather="x"></i></a>
     </div>
@@ -66,11 +68,10 @@ $menus = $menuController->getMenus();
       </button>
 
       <?php if (isset($_SESSION['message'])): ?>
-        <div class="alert <?= ($_SESSION['message_type'] == 'error') ? 'bg-red-500' : 'bg-green-500' ?> text-white p-4 rounded mb-4">
-          <?= $_SESSION['message']; ?>
+        <div class="alert bg-red-500 text-white p-4 rounded mb-4">
+          <?= $_SESSION['message']['text']; ?>
         </div>
-        <?php unset($_SESSION['message']);
-        unset($_SESSION['message_type']); ?>
+        <?php unset($_SESSION['message']); ?>
       <?php endif; ?>
 
       <label for="email" class="block mt-2">Email</label>
@@ -107,18 +108,32 @@ $menus = $menuController->getMenus();
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita, repellendus numquam quam tempora voluptatum.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center flex flex-col items-center">
-          <div class="flex justify-center gap-4 mb-4">
-            <a href="#" class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out">
-              <i data-feather="shopping-cart"></i>
-            </a>
-            <button id="order-button" class="bg-yellow-500 p-3 hover:bg-yellow-400 transition duration-300 ease-in-out flex items-center justify-center">Pesan Sekarang</button>
+        <?php foreach ($menus as $menu): ?>
+          <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center flex flex-col items-center">
+            <div class="flex justify-center gap-4 mb-4">
+              <a
+                href="#"
+                class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out add-to-cart"
+                data-id="<?= $menu['id']; ?>"
+                data-name="<?= $menu['menu_name']; ?>"
+                data-price="<?= $menu['price']; ?>"
+                data-description="<?= $menu['description']; ?>"
+                data-image="storage/images/<?= $menu['menu_image']; ?>">
+                <i data-feather="shopping-cart"></i>
+              </a>
+              <button
+                id="order-button"
+                class="bg-yellow-500 p-3 hover:bg-yellow-400 transition duration-300 ease-in-out flex items-center justify-center"
+                data-id="<?= $menu['id']; ?>">
+                Pesan Sekarang
+              </button>
+            </div>
+            <img src="storage/images/<?= $menu['menu_image']; ?>" alt="<?= $menu['menu_name']; ?>" class="rounded-lg mb-4 w-full h-48 object-cover">
+            <h3 class="text-xl font-semibold text-white"><?= $menu['menu_name']; ?></h3>
+            <p class="text-yellow-500 mt-2">IDR <?= $menu['price']; ?></p>
+            <p class="text-gray-400 mt-2"><?= $menu['description']; ?></p>
           </div>
-          <img src="storage/images/<?= $menu['menu_image']; ?>" alt="<?= $menu['menu_name']; ?>" class="rounded-lg mb-4 w-full h-48 object-cover">
-          <h3 class="text-xl font-semibold text-white"><?= $menu['menu_name']; ?></h3>
-          <p class="text-yellow-500 mt-2">IDR <?= $menu['price']; ?></p>
-          <p class="text-gray-400 mt-2"><?= $menu['description']; ?></p>
-        </div>
+        <?php endforeach; ?>
       </div>
     </section>
 
@@ -203,8 +218,44 @@ $menus = $menuController->getMenus();
     </div>
   </footer>
 
+  <script src="assets/js/script.js"></script>
+
   <script>
     feather.replace();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const buttons = document.querySelectorAll(".add-to-cart");
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          const menu = {
+            id: button.dataset.id,
+            name: button.dataset.name,
+            price: button.dataset.price,
+            description: button.dataset.description,
+            image: button.dataset.image,
+          };
+
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+          const existingMenuIndex = cart.findIndex(item => item.id === menu.id);
+          if (existingMenuIndex === -1) {
+            cart.push(menu);
+          } else {
+            alert(`${menu.name} sudah ada di keranjang`);
+            return;
+          }
+
+          localStorage.setItem("cart", JSON.stringify(cart));
+
+          alert(`${menu.name} telah ditambahkan ke keranjang`);
+
+          window.location.href = "charts.php";
+        });
+      });
+    });
 
     const loginButton = document.getElementById('login-button');
     const loginModal = document.getElementById('login-modal');

@@ -15,7 +15,7 @@ class OrderController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $menu_id = $_POST['menu_id'];
-            $orderer_id = $_POST['orderer_id'];
+            $orderer_id = $_POST['orderer_id'] ?? NULL;
             $orderer_name = $_POST['orderer_name'];
             $quantity = $_POST['quantity'];
             $table_number = $_POST['table_number'];
