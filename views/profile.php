@@ -9,7 +9,7 @@ if (isset($_SESSION['user'])) {
     $email = $user['email'];
     $profilePicture = 'https://via.placeholder.com/150';
 } else {
-    header("Location: ../../index.php");
+    header("Location: ../index.php");
     exit();
 }
 ?>
