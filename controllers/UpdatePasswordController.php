@@ -3,7 +3,7 @@ session_start();
 require_once '../models/UserModel.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_SESSION['user'];
+    $id = $_SESSION['user']['id']; 
     $old_password = $_POST['old_password'];
     $new_password = $_POST['new_password'];
     $confirm_new_password = $_POST['confirm_new_password'];

@@ -16,7 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $userModel = new UserModel();
 
-    $user = $userModel->register($name, $email, $role, $password);
+    $userModel->register($name, $email, $role, $password);
+
+    $user = $userModel->login($email);
 
     if ($user) {
         $_SESSION['user'] = [
@@ -27,5 +29,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         header("Location: ../views/customer/home.php");
         exit;
-    } 
+    }
 }
