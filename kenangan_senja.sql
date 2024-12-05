@@ -11,9 +11,6 @@ CREATE TABLE users (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`) VALUES
-(1, 'Admin', 'heriwhydiono@gmail.com', '$2y$10$nmVj3/M3ThvpM3OQdYU2B.MQ9fJWL7vpf90dawhDXobbY47xuK8Su', 'admin');
-
 CREATE TABLE menus (
     id INT AUTO_INCREMENT PRIMARY KEY,
     menu_name VARCHAR(255),
