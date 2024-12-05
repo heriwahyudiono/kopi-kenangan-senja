@@ -101,63 +101,60 @@ $menus = $menuController->getMenus();
     </div>
   </section>
 
-  <?php foreach ($menus as $menu): ?>
-    <section id="menu" class="py-20 px-6 bg-gray-900">
-      <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold"><span class="text-yellow-500">Menu</span> Kami</h2>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita, repellendus numquam quam tempora voluptatum.</p>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <?php foreach ($menus as $menu): ?>
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center flex flex-col items-center">
-            <div class="flex justify-center gap-4 mb-4">
-              <a
-                href="#"
-                class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out add-to-cart"
-                data-id="<?= $menu['id']; ?>"
-                data-name="<?= $menu['menu_name']; ?>"
-                data-price="<?= $menu['price']; ?>"
-                data-description="<?= $menu['description']; ?>"
-                data-image="storage/images/<?= $menu['menu_image']; ?>">
-                <i data-feather="shopping-cart"></i>
-              </a>
-              <button
-                id="order-button"
-                class="bg-yellow-500 p-3 hover:bg-yellow-400 transition duration-300 ease-in-out flex items-center justify-center"
-                data-id="<?= $menu['id']; ?>">
-                Pesan Sekarang
-              </button>
-            </div>
-            <img src="storage/images/<?= $menu['menu_image']; ?>" alt="<?= $menu['menu_name']; ?>" class="rounded-lg mb-4 w-full h-48 object-cover">
-            <h3 class="text-xl font-semibold text-white"><?= $menu['menu_name']; ?></h3>
-            <p class="text-yellow-500 mt-2">IDR <?= $menu['price']; ?></p>
-            <p class="text-gray-400 mt-2"><?= $menu['description']; ?></p>
-          </div>
-        <?php endforeach; ?>
-      </div>
-    </section>
-
-    <div id="order-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
-      <form action="../controllers/OrderController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
-        <button id="order-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
-          <i data-feather="x"></i>
-        </button>
-
-        <input type="hidden" value="<?= $menu['id']; ?>" name="menu_id">
-
-        <label for="orderer_name" class="block mt-2">Nama Kamu</label>
-        <input type="text" id="orderer_name" name="orderer_name" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
-
-        <label for="quantity" class="block mt-4">Jumlah Pesanan</label>
-        <input type="text" id="quantity" name="quantity" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
-
-        <label for="table_number" class="block mt-4">Nomor Meja</label>
-        <input type="text" id="table_number" name="table_number" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
-
-        <button type="submit" class="mt-4 w-full py-2 bg-yellow-500 hover:bg-yellow-400 text-white font-semibold rounded-lg transition duration-300 ease-in-out">BUAT PESANAN</button>
-      </form>
+  <section id="menu" class="py-20 px-6 bg-gray-900">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold"><span class="text-yellow-500">Menu</span> Kami</h2>
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita, repellendus numquam quam tempora voluptatum.</p>
     </div>
-  <?php endforeach; ?>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <?php foreach ($menus as $menu): ?>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center flex flex-col items-center">
+          <div class="flex justify-center gap-4 mb-4">
+            <a
+              href="#"
+              class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out add-to-cart"
+              data-id="<?= $menu['id']; ?>"
+              data-name="<?= $menu['menu_name']; ?>"
+              data-price="<?= $menu['price']; ?>"
+              data-description="<?= $menu['description']; ?>"
+              data-image="storage/images/<?= $menu['menu_image']; ?>">
+              <i data-feather="shopping-cart"></i>
+            </a>
+            <button
+              class="order-button bg-yellow-500 p-3 hover:bg-yellow-400 transition duration-300 ease-in-out flex items-center justify-center"
+              data-id="<?= $menu['id']; ?>">
+              Pesan Sekarang
+            </button>
+          </div>
+          <img src="storage/images/<?= $menu['menu_image']; ?>" alt="<?= $menu['menu_name']; ?>" class="rounded-lg mb-4 w-full h-48 object-cover">
+          <h3 class="text-xl font-semibold text-white"><?= $menu['menu_name']; ?></h3>
+          <p class="text-yellow-500 mt-2">IDR <?= $menu['price']; ?></p>
+          <p class="text-gray-400 mt-2"><?= $menu['description']; ?></p>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </section>
+
+  <div id="order-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-12 z-50 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out">
+    <form action="../controllers/OrderController.php" method="POST" enctype="multipart/form-data" class="relative bg-white/60 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full max-w-md">
+      <button id="order-close" type="button" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
+        <i data-feather="x"></i>
+      </button>
+
+      <input type="hidden" id="menu_id" name="menu_id">
+
+      <label for="orderer_name" class="block mt-2">Nama Kamu</label>
+      <input type="text" id="orderer_name" name="orderer_name" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
+
+      <label for="quantity" class="block mt-4">Jumlah Pesanan</label>
+      <input type="text" id="quantity" name="quantity" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
+
+      <label for="table_number" class="block mt-4">Nomor Meja</label>
+      <input type="text" id="table_number" name="table_number" class="w-full p-2 mt-1 focus:outline-none text-gray-900" required>
+
+      <button type="submit" class="mt-4 w-full py-2 bg-yellow-500 hover:bg-yellow-400 text-white font-semibold rounded-lg transition duration-300 ease-in-out">BUAT PESANAN</button>
+    </form>
+  </div>
 
   <section id="products" class="py-20 px-6 bg-gray-800">
     <div class="text-center mb-10">
@@ -271,13 +268,19 @@ $menus = $menuController->getMenus();
       loginModal.classList.add('opacity-0', 'pointer-events-none');
     });
 
-    const orderButton = document.getElementById('order-button');
     const orderModal = document.getElementById('order-modal');
     const orderClose = document.getElementById('order-close');
+    const menuIdInput = document.getElementById('menu_id');
+    
+    document.addEventListener('click', function(event) {
+      if (event.target.classList.contains('order-button')) {
+        const menuId = event.target.getAttribute('data-id');
 
-    orderButton.addEventListener('click', function() {
-      orderModal.classList.remove('opacity-0', 'pointer-events-none');
-      orderModal.classList.add('opacity-100', 'pointer-events-auto');
+        menuIdInput.value = menuId;
+
+        orderModal.classList.remove('opacity-0', 'pointer-events-none');
+        orderModal.classList.add('opacity-100', 'pointer-events-auto');
+      }
     });
 
     orderClose.addEventListener('click', function() {
@@ -287,3 +290,4 @@ $menus = $menuController->getMenus();
   </script>
 </body>
 </html>
+
