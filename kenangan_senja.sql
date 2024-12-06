@@ -24,6 +24,13 @@ CREATE TABLE menus (
 INSERT INTO menus (menu_name, menu_image, description, price, created_at, updated_at) 
 VALUES ('Espresso', 'menu.jpg', NULL , 15000, NOW(), NOW());
 
+CREATE TABLE charts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  menu_id INT(11),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 CREATE TABLE orders (
   id INT AUTO_INCREMENT PRIMARY KEY,
   menu_id INT(11),

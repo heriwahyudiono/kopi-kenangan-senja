@@ -33,7 +33,7 @@ if (isset($_SESSION['user'])) {
         </div>
 
         <?php if (isset($_SESSION['message'])): ?>
-            <div class="mb-4 text-center <?= $_SESSION['message']['type'] === 'success' ? 'text-green-500' : 'text-red-500'; ?>">
+            <div id="message" class="mb-4 text-center <?= $_SESSION['message']['type'] === 'success' ? 'text-green-500' : 'text-red-500'; ?>">
                 <?= htmlspecialchars($_SESSION['message']['text']); ?>
             </div>
             <?php unset($_SESSION['message']); ?>
@@ -55,5 +55,14 @@ if (isset($_SESSION['user'])) {
             </div>
         </form>
     </div>
+
+    <script>
+    setTimeout(() => {
+      const message = document.getElementById('message');
+      if(message) {
+        message.remove();
+      }
+    }, 2000);
+    </script>
 </body>
 </html>
