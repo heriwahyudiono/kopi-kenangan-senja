@@ -44,7 +44,7 @@ $orders = $orderController->getOrderByUser($user['id']);
     </div>
   </nav>
 
-  <div id="menu-modal" class="bg-black bg-opacity-50 absolute top-14 right-4 z-50 hidden">
+  <div id="menu-modal" class="fixed bg-black bg-opacity-50 top-14 right-4 z-50 hidden">
     <div class="bg-white/60 backdrop-blur-lg py-4 rounded-lg shadow-lg w-48">
       <ul>
         <a href="../profile.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Profile</a>
