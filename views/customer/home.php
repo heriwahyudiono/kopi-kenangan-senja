@@ -70,17 +70,30 @@ $menus = $menuController->getMenus();
     </div>
   <?php endif; ?>
 
-  <section class="absolute left-8 md:left-72 top-32">
-    <h3 class="text-2xl font-bold mb-4">Menu</h3>
-    <p class="text-gray-300 mb-6">Menu yang tersedia</p>
+  <section id="menu" class="absolute left-8 md:left-72 top-32">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold"><span class="text-yellow-500">Menu</span> Kami</h2>
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita, repellendus numquam quam tempora voluptatum.</p>
+    </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <?php foreach ($menus as $menu): ?>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center flex flex-col items-center">
           <div class="flex justify-center gap-4 mb-4">
-            <a href="#" class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out">
+            <a
+              href="#"
+              class="text-yellow-500 bg-gray-900 p-3 rounded-full hover:bg-yellow-500 hover:text-gray-900 transition duration-300 ease-in-out add-to-cart"
+              data-id="<?= $menu['id']; ?>"
+              data-name="<?= $menu['menu_name']; ?>"
+              data-price="<?= $menu['price']; ?>"
+              data-description="<?= $menu['description']; ?>"
+              data-image="storage/images/<?= $menu['menu_image']; ?>">
               <i data-feather="shopping-cart"></i>
             </a>
-            <button id="order-button" class="bg-yellow-500 p-3 hover:bg-yellow-400 transition duration-300 ease-in-out flex items-center justify-center">Pesan Sekarang</button>
+            <button
+              class="order-button bg-yellow-500 p-3 hover:bg-yellow-400 transition duration-300 ease-in-out flex items-center justify-center"
+              data-id="<?= $menu['id']; ?>">
+              Pesan Sekarang
+            </button>
           </div>
           <img src="../../storage/images/<?= $menu['menu_image']; ?>" alt="<?= $menu['menu_name']; ?>" class="rounded-lg mb-4 w-full h-48 object-cover">
           <h3 class="text-xl font-semibold text-white"><?= $menu['menu_name']; ?></h3>
@@ -97,7 +110,7 @@ $menus = $menuController->getMenus();
         <i data-feather="x"></i>
       </button>
 
-      <input type="hidden" value="<?= $menu['id']; ?>" name="menu_id">
+      <input type="hidden" id="menu_id" name="menu_id">
 
       <input type="hidden" value="<?= $user['id']; ?>" name="orderer_id">
 
@@ -140,18 +153,24 @@ $menus = $menuController->getMenus();
       menuModal.classList.toggle('hidden');
     });
 
-    const orderButton = document.getElementById('order-button');
-    const modalOrder = document.getElementById('order-modal');
+    const orderModal = document.getElementById('order-modal');
     const orderClose = document.getElementById('order-close');
+    const menuIdInput = document.getElementById('menu_id');
+    
+    document.addEventListener('click', function(event) {
+      if (event.target.classList.contains('order-button')) {
+        const menuId = event.target.getAttribute('data-id');
 
-    orderButton.addEventListener('click', function() {
-      modalOrder.classList.remove('opacity-0', 'pointer-events-none');
-      modalOrder.classList.add('opacity-100', 'pointer-events-auto');
+        menuIdInput.value = menuId;
+
+        orderModal.classList.remove('opacity-0', 'pointer-events-none');
+        orderModal.classList.add('opacity-100', 'pointer-events-auto');
+      }
     });
 
     orderClose.addEventListener('click', function() {
-      modalOrder.classList.remove('opacity-100', 'pointer-events-auto');
-      modalOrder.classList.add('opacity-0', 'pointer-events-none');
+      orderModal.classList.remove('opacity-100', 'pointer-events-auto');
+      orderModal.classList.add('opacity-0', 'pointer-events-none');
     });
   </script>
 </body>
