@@ -17,7 +17,6 @@ if (isset($_SESSION['user'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/x-icon" href="../assets/images/ptpn6.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,28 +29,31 @@ if (isset($_SESSION['user'])) {
         <h1 class="text-3xl font-bold text-center text-white mb-8">Profile</h1>
 
         <div class="flex items-center justify-center mb-8">
-            <img src="<?= $profilePicture; ?>" alt="Profile Picture" class="w-32 h-32 rounded-full border-4 border-gray-600">
+            <img src="<?= $profilePicture; ?>" alt="<?= $profilePicture; ?>" class="w-32 h-32 rounded-full border-4 border-gray-600">
         </div>
 
-        <div class="mb-6">
-            <label for="name" class="block text-gray-300 font-semibold">Name</label>
-            <div class="mt-2 p-3 bg-gray-700 text-gray-200 rounded-lg">
-                <?php echo $name; ?>
+        <?php if (isset($_SESSION['message'])): ?>
+            <div class="mb-4 text-center <?= $_SESSION['message']['type'] === 'success' ? 'text-green-500' : 'text-red-500'; ?>">
+                <?= htmlspecialchars($_SESSION['message']['text']); ?>
             </div>
-        </div>
+            <?php unset($_SESSION['message']); ?>
+        <?php endif; ?>
 
-        <div class="mb-6">
-            <label for="email" class="block text-gray-300 font-semibold">Email</label>
-            <div class="mt-2 p-3 bg-gray-700 text-gray-200 rounded-lg">
-                <?php echo $email; ?>
+        <form action="../controllers/UpdateUserController.php" method="POST">
+            <div class="mb-6">
+                <label for="name" class="block text-gray-300 font-semibold">Name</label>
+                <input type="text" id="name" name="name" value="<?= htmlspecialchars($name); ?>" class="w-full mt-2 p-3 bg-gray-700 text-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
             </div>
-        </div>
 
-        <div class="mt-8 text-center">
-            <a href="#" class="w-full bg-yellow-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-yellow-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                Update Profile
-            </a>
-        </div>
+            <div class="mb-6">
+                <label for="email" class="block text-gray-300 font-semibold">Email</label>
+                <input type="email" id="email" name="email" value="<?= htmlspecialchars($email); ?>" class="w-full mt-2 p-3 bg-gray-700 text-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
+            </div>
+
+            <div class="mt-8 text-center">
+                <button type="submit" class="w-full bg-yellow-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-yellow-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-500">Update Profile</button>
+            </div>
+        </form>
     </div>
 </body>
 </html>

@@ -57,7 +57,20 @@ class UserModel {
         $stmt->execute();
     
         return $stmt->affected_rows > 0;
-    }   
+    } 
+    
+    public function updateUser($id, $name, $email)
+    {
+        $sql = "UPDATE users SET name=?, email=? WHERE id=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("iss", $id, $name, $email);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function updatePassword($id, $password)
     {
