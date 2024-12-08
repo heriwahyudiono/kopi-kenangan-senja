@@ -20,7 +20,7 @@ if (!isset($_SESSION['user'])) {
         <h1 class="text-3xl font-bold text-center text-white mb-8">Update Your Password</h1>
 
         <?php if (isset($_SESSION['message'])): ?>
-            <div class="flex justify-center mb-4">
+            <div id="message" class="flex justify-center mb-4">
                 <div class="m-4 p-4 w-64 rounded-lg shadow-lg text-center <?= $_SESSION['message']['type'] === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'; ?>">
                     <?= $_SESSION['message']['text']; ?>
                     <?php unset($_SESSION['message']); ?>
@@ -58,5 +58,14 @@ if (!isset($_SESSION['user'])) {
             <a href="../controllers/DeleteAccountController.php" class="bg-red-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-red-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-red-500">Delete Account</a>
         </div>
     </div>
+
+    <script>
+        setTimeout(() => {
+            const message = document.getElementById('message');
+            if(message) {
+                message.remove();
+            }
+        }, 2000);
+    </script>
 </body>
 </html>

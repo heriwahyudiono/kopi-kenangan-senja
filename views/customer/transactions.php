@@ -16,6 +16,7 @@ $transactions = $transactionController->getTransactions();
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,6 +32,7 @@ $transactions = $transactionController->getTransactions();
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
     <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-800 bg-opacity-90 py-4 px-6 flex justify-between items-center shadow-md">
         <a href="#" class="text-2xl font-bold italic text-white">
@@ -47,9 +49,19 @@ $transactions = $transactionController->getTransactions();
     <div id="menu-modal" class="fixed bg-black bg-opacity-50 top-14 right-4 z-50 hidden">
         <div class="bg-white/60 backdrop-blur-lg py-4 rounded-lg shadow-lg w-48">
             <ul>
-                <a href="../profile.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Profile</a>
-                <a href="../settings.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Settings</a>
-                <a href="../../controllers/LogoutController.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Logout</a>
+                <li>
+                    <a href="../profile.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Profile</a>
+                </li>
+                <li>
+                    <a href="../settings.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Settings</a>
+                </li>
+                <li>
+                    <form action="../../controllers/LogoutController.php" method="POST" class="block w-full">
+                        <button type="submit" class="text-gray-700 hover:bg-gray-100 py-2 px-4 w-full text-left">
+                            Logout
+                        </button>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>
@@ -125,4 +137,5 @@ $transactions = $transactionController->getTransactions();
         });
     </script>
 </body>
+
 </html>

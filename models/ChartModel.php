@@ -6,7 +6,7 @@ class ChartModel {
 
     public function __construct() {
         $db = new Connection();
-        $this->conn = $db->openConnection();
+        $this->conn = $db->openConnection(); 
     }
 
     public function addChart($menu_id) {
@@ -27,5 +27,27 @@ class ChartModel {
         
         return $stmt->execute();
     }  
+
+    public function getCharts() {
+        $sql = "SELECT charts.id AS chart_id, 
+                       menus.id AS menu_id, 
+                       menus.menu_name, 
+                       menus.menu_image, 
+                       menus.description, 
+                       menus.price 
+                FROM charts
+                INNER JOIN menus ON charts.menu_id = menus.id";
+
+        $result = $this->conn->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function deleteChart($chartId) {
+        $sql = "DELETE FROM charts WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $chartId);
+    
+        return $stmt->execute();
+    }    
 }
 ?>

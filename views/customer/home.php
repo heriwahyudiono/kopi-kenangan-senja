@@ -31,6 +31,7 @@ $menus = $menuController->getMenus();
     <div class="flex space-x-4 items-center">
       <span class="hidden md:block"><?= htmlspecialchars($user['name']); ?></span>
       <a href="#" id="modal-button" class="hover:text-yellow-500"><i data-feather="user"></i></a>
+      <a href="charts.php" id="shopping-cart-button" class="hover:text-yellow-500"><i data-feather="shopping-cart"></i></a>
       <a href="#" id="menu-button" class="md:hidden hover:text-yellow-500"><i data-feather="menu"></i></a>
       <a href="#" id="close-button" class="hidden md:hidden hover:text-yellow-500"><i data-feather="x"></i></a>
     </div>
@@ -39,9 +40,19 @@ $menus = $menuController->getMenus();
   <div id="menu-modal" class="bg-black bg-opacity-50 absolute top-14 right-4 z-50 hidden">
     <div class="bg-white/60 backdrop-blur-lg py-4 rounded-lg shadow-lg w-48">
       <ul>
-        <a href="../profile.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Profile</a>
-        <a href="../settings.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Settings</a>
-        <a href="../../controllers/LogoutController.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Logout</a>
+        <li>
+          <a href="../profile.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Profile</a>
+        </li>
+        <li>
+          <a href="../settings.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Settings</a>
+        </li>
+        <li>
+          <form action="../../controllers/LogoutController.php" method="POST" class="block w-full">
+            <button type="submit" class="text-gray-700 hover:bg-gray-100 py-2 px-4 w-full text-left">
+              Logout
+            </button>
+          </form>
+        </li>
       </ul>
     </div>
   </div>
@@ -55,13 +66,6 @@ $menus = $menuController->getMenus();
       <a href="transactions.php" class="hover:bg-yellow-100 py-2 px-8">Transaksi</a>
     </nav>
   </aside>
-
-  <div class="absolute right-10 top-20 cursor-pointer">
-    <button id="modal-button" class="flex items-center gap-2 py-2 px-4 bg-yellow-500 hover:bg-yellow-400 text-white text-sm font-medium shadow-md focus:outline-none focus:ring-2 focus:ring-yellow-300">
-      <i data-feather="shopping-cart" class="w-4 h-4"></i>
-      Keranjang
-    </button>
-  </div>
 
   <?php if (isset($_SESSION['message'])): ?>
     <div id="message" class="fixed z-50 top-24 left-1/2 transform -translate-x-1/2 p-4 w-64 rounded-lg shadow-lg text-center <?= $_SESSION['message']['type'] === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'; ?>">

@@ -40,6 +40,8 @@ if (isset($_SESSION['user'])) {
         <?php endif; ?>
 
         <form action="../controllers/UpdateUserController.php" method="POST">
+            <input type="hidden" value="<?= $user['id'] ?>" name="id">
+
             <div class="mb-6">
                 <label for="name" class="block text-gray-300 font-semibold">Name</label>
                 <input type="text" id="name" name="name" value="<?= htmlspecialchars($name); ?>" class="w-full mt-2 p-3 bg-gray-700 text-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>

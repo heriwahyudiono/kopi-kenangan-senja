@@ -63,7 +63,7 @@ class UserModel {
     {
         $sql = "UPDATE users SET name=?, email=? WHERE id=?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("iss", $id, $name, $email);
+        $stmt->bind_param("ssi", $name, $email, $id);
 
         if ($stmt->execute()) {
             return true;

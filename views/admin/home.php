@@ -39,9 +39,19 @@ $menus = $menuController->getMenus();
   <div id="modal-menu" class="bg-black bg-opacity-50 absolute top-14 right-4 z-50 hidden">
     <div class="bg-white/60 backdrop-blur-lg py-4 rounded-lg shadow-lg w-48">
       <ul>
-        <a href="../profile.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Profile</a>
-        <a href="../settings.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Settings</a>
-        <a href="../../controllers/LogoutController.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Logout</a>
+        <li>
+          <a href="../profile.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Profile</a>
+        </li>
+        <li>
+          <a href="../settings.php" class="text-gray-700 hover:bg-gray-100 py-2 px-4 block w-full">Settings</a>
+        </li>
+        <li>
+          <form action="../../controllers/LogoutController.php" method="POST" class="block w-full">
+            <button type="submit" class="text-gray-700 hover:bg-gray-100 py-2 px-4 w-full text-left">
+              Logout
+            </button>
+          </form>
+        </li>
       </ul>
     </div>
   </div>
@@ -50,9 +60,9 @@ $menus = $menuController->getMenus();
 
   <aside class="fixed top-0 h-full w-64 bg-white text-black shadow-lg z-50 md:hidden sidebar" id="sidenav">
     <nav class="flex flex-col h-full py-8">
-    <a href="home.php" class="hover:bg-yellow-100 py-2 px-8">Menu</a>
-    <a href="orders.php" class="hover:bg-yellow-100 py-2 px-8">Pesanan</a>
-    <a href="transactions.php" class="hover:bg-yellow-100 py-2 px-8">Transaksi</a>
+      <a href="home.php" class="hover:bg-yellow-100 py-2 px-8">Menu</a>
+      <a href="orders.php" class="hover:bg-yellow-100 py-2 px-8">Pesanan</a>
+      <a href="transactions.php" class="hover:bg-yellow-100 py-2 px-8">Transaksi</a>
     </nav>
   </aside>
 
@@ -82,7 +92,7 @@ $menus = $menuController->getMenus();
   </div>
 
   <?php if (isset($_SESSION['message'])): ?>
-    <div class="fixed top-24 left-1/2 transform -translate-x-1/2 p-4 w-64 rounded-lg shadow-lg text-center <?= $_SESSION['message']['type'] === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'; ?>">
+    <div id="message" class="fixed top-24 left-1/2 transform -translate-x-1/2 p-4 w-64 rounded-lg shadow-lg text-center <?= $_SESSION['message']['type'] === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'; ?>">
       <?= $_SESSION['message']['text']; ?>
       <?php unset($_SESSION['message']); ?>
     </div>
@@ -138,20 +148,27 @@ $menus = $menuController->getMenus();
   <script>
     feather.replace();
 
+    setTimeout(() => {
+      const message = document.getElementById('message');
+      if(message) {
+        message.remove();
+      }
+    }, 2000);
+
     const toggleButton = document.getElementById('menu-button');
     const sideNav = document.getElementById('sidenav');
     const closeMenu = document.getElementById("close-button");
 
     toggleButton.addEventListener('click', () => {
-        sideNav.classList.toggle('visible');
-        toggleButton.classList.toggle('hidden');
-        closeMenu.classList.toggle('hidden');
+      sideNav.classList.toggle('visible');
+      toggleButton.classList.toggle('hidden');
+      closeMenu.classList.toggle('hidden');
     });
 
     closeMenu.addEventListener('click', () => {
-        sideNav.classList.toggle('visible');
-        toggleButton.classList.toggle('hidden');
-        closeMenu.classList.toggle('hidden');
+      sideNav.classList.toggle('visible');
+      toggleButton.classList.toggle('hidden');
+      closeMenu.classList.toggle('hidden');
     });
 
     const modalButton = document.getElementById('modal-button');
