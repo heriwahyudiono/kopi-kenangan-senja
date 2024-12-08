@@ -8,6 +8,10 @@ if (!isset($_SESSION['user'])) {
 
 $user = $_SESSION['user'];
 
+if($user['role'] != 'admin') {
+  die("Unauthorized");
+}
+
 require_once __DIR__ . '/../../controllers/OrderController.php';
 
 $orderController = new OrderController();
